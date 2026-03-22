@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConstroBR — Materiais de Construção</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E84B0C;
+    --orange-dark: #C43C07;
+    --orange-light: #FF6B35;
+    --yellow: #F5A623;
+    --dark: #1A1208;
+    --dark2: #2C1F0E;
+    --dark3: #3D2C14;
+    --mid: #6B4E2A;
+    --sand: #C8A96E;
+    --sand-light: #E8D5B0;
+    --cream: #FAF5EC;
+    --white: #FFFFFF;
+    --gray: #888070;
+    --gray-light: #F0EBE0;
+    --green: #2D7D3A;
+    --red: #C0392B;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ===== ANNOUNCEMENT BAR ===== */
+  .announce-bar {
+    background: var(--dark);
+    color: var(--sand-light);
+    text-align: center;
+    padding: 9px 20px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .announce-bar span { color: var(--yellow); font-weight: 700; }
+  .announce-bar .sep { color: var(--mid); }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--white);
+    border-bottom: 3px solid var(--orange);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(26,18,8,0.12);
+  }
+  .header-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    height: 72px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--orange);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.7rem;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .logo-text span { color: var(--orange); }
+  .logo-sub {
+    font-size: 0.62rem;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 1px;
+  }
+
+  /* Search */
+  .search-bar {
+    display: flex;
+    border: 2px solid var(--sand-light);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .search-bar:focus-within { border-color: var(--orange); }
+  .search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 18px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    color: var(--dark);
+    background: var(--gray-light);
+    height: 44px;
+  }
+  .search-bar select {
+    border: none;
+    border-left: 2px solid var(--sand-light);
+    background: var(--gray-light);
+    padding: 0 10px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.8rem;
+    color: var(--mid);
+    cursor: pointer;
+    outline: none;
+  }
+  .search-btn {
+    background: var(--orange);
+    border: none;
+    color: white;
+    padding: 0 22px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+  }
+  .search-btn:hover { background: var(--orange-dark); }
+
+  /* Header actions */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .hbtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--dark2);
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+    position: relative;
+  }
+  .hbtn:hover { background: var(--gray-light); color: var(--orange); }
+  .hbtn .icon { font-size: 1.3rem; }
+  .hbtn .label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .hbtn .badge {
+    position: absolute;
+    top: 4px; right: 6px;
+    background: var(--orange);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hbtn-cta {
+    background: var(--orange);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    flex-direction: row;
+    gap: 6px;
+  }
+  .hbtn-cta:hover { background: var(--orange-dark); color: white; }
+  .hbtn-cta .label { font-size: 0.72rem; text-transform: none; letter-spacing: 0; }
+
+  /* ===== NAV ===== */
+  nav {
+    background: var(--dark);
+    border-bottom: 2px solid var(--dark3);
+  }
+  .nav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 18px;
+    height: 46px;
+    color: var(--sand-light);
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    white-space: nowrap;
+    position: relative;
+  }
+  .nav-item:hover, .nav-item.active { background: var(--orange); color: white; }
+  .nav-item .nav-icon { font-size: 1rem; }
+  .nav-dept {
+    font-size: 0.75rem;
+    background: var(--orange);
+    color: white;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .nav-spacer { flex: 1; }
+  .nav-promo {
+    background: var(--yellow);
+    color: var(--dark) !important;
+  }
+  .nav-promo:hover { background: #e09500 !important; color: var(--dark) !important; }
+
+  /* ===== HERO ===== */
+  .hero {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 28px 24px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 16px;
+  }
+  .hero-main {
+    background: var(--dark);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(232,75,12,0.9) 0%, rgba(26,18,8,0.7) 60%),
+      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 80px);
+    z-index: 0;
+  }
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    background-image:
+      radial-gradient(circle at 80% 20%, var(--yellow) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--yellow);
+    color: var(--dark);
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3.8rem;
+    color: white;
+    line-height: 0.95;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .hero-title .accent { color: var(--yellow); }
+  .hero-desc {
+    color: rgba(255,255,255,0.75);
+    font-size: 1rem;
+    margin-bottom: 24px;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--orange);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--orange-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+  .hero-stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .hero-stat .num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--yellow);
+    line-height: 1;
+  }
+  .hero-stat .txt {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  /* Hero sidebar */
+  .hero-side { display: flex; flex-direction: column; gap: 12px; }
+  .side-card {
+    border-radius: 12px;
+    overflow: hidden;
+    flex: 1;
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    align-items: flex-end;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .side-card:hover { transform: scale(1.02); }
+  .side-card .bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    filter: saturate(0.5);
+  }
+  .side-card.card1 { background: linear-gradient(135deg, #2C4A1E, #4A7A30); }
+  .side-card.card2 { background: linear-gradient(135deg, #1E2C4A, #304A7A); }
+  .side-card.card3 { background: linear-gradient(135deg, #4A2C1E, #7A4A30); }
+  .side-card-content {
+    position: relative;
+    z-index: 1;
+    padding: 16px;
+    width: 100%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  }
+  .side-card-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 2px;
+  }
+  .side-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: white;
+    line-height: 1.1;
+  }
+  .side-card-disc {
+    background: var(--yellow);
+    color: var(--dark);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 8px;
+  }
+
+  /* ===== TRUST BAR ===== */
+  .trust-bar {
+    background: var(--white);
+    border-top: 1px solid var(--sand-light);
+    border-bottom: 3px solid var(--gray-light);
+  }
+  .trust-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 24px;
+    border-right: 1px solid var(--sand-light);
+    transition: background 0.2s;
+  }
+  .trust-item:last-child { border-right: none; }
+  .trust-item:hover { background: var(--gray-light); }
+  .trust-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: var(--gray-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .trust-title {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .trust-sub { font-size: 0.77rem; color: var(--gray); }
+
+  /* ===== SECTION HEADER ===== */
+  .sec-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .sec-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.9rem;
+    color: var(--dark);
+    text-transform: uppercase;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sec-title::before {
+    content: '';
+    width: 5px;
+    height: 32px;
+    background: var(--orange);
+    border-radius: 3px;
+    display: block;
+  }
+  .sec-link {
+    color: var(--orange);
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s;
+  }
+  .sec-link:hover { gap: 8px; }
+
+  /* ===== CATEGORIES ===== */
+  .categories-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+  }
+  .cat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .cat-card:hover {
+    border-color: var(--orange);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(232,75,12,0.15);
+  }
+  .cat-card .cat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+  }
+  .cat-card .cat-name {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--dark2);
+    text-align: center;
+    line-height: 1.3;
+  }
+  .cat-card .cat-count {
+    font-size: 0.68rem;
+    color: var(--gray);
+  }
+  .bg-orange { background: rgba(232,75,12,0.1); }
+  .bg-blue { background: rgba(30,44,74,0.1); }
+  .bg-green { background: rgba(45,125,58,0.1); }
+  .bg-yellow { background: rgba(245,166,35,0.1); }
+  .bg-purple { background: rgba(100,50,150,0.1); }
+  .bg-red { background: rgba(192,57,43,0.1); }
+  .bg-teal { background: rgba(26,115,115,0.1); }
+  .bg-brown { background: rgba(107,78,42,0.1); }
+
+  /* ===== OFFERS / FLASH SALE ===== */
+  .offers-section {
+    background: var(--dark);
+    padding: 40px 0;
+    margin: 0 0 0 0;
+  }
+  .offers-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .offers-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .offers-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: white;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .fire-badge {
+    background: var(--orange);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  .countdown {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .count-label {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.82rem;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+  }
+  .count-blocks { display: flex; gap: 4px; align-items: center; }
+  .count-block {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .count-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--yellow);
+    line-height: 1;
+  }
+  .count-unit { font-size: 0.55rem; color: rgba(255,255,255,0.4); letter-spacing: 0.05em; }
+  .count-sep { color: var(--orange); font-weight: 700; font-size: 1.1rem; }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  /* ===== PRODUCT CARD ===== */
+  .prod-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--sand-light);
+    transition: box-shadow 0.2s, transform 0.15s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .prod-card:hover {
+    box-shadow: 0 12px 32px rgba(26,18,8,0.14);
+    transform: translateY(-2px);
+  }
+  .prod-badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 2;
+  }
+  .prod-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .badge-off { background: var(--red); color: white; }
+  .badge-new { background: var(--green); color: white; }
+  .badge-hot { background: var(--orange); color: white; }
+  .badge-pix { background: var(--yellow); color: var(--dark); }
+  .prod-wish {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    border: 1px solid var(--sand-light);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    z-index: 2;
+    transition: background 0.2s, color 0.2s;
+  }
+  .prod-wish:hover { background: var(--orange); color: white; border-color: var(--orange); }
+  .prod-img {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    background: var(--gray-light);
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .prod-card:hover .prod-img { transform: scale(1.05); }
+  .prod-body { padding: 14px; flex: 1; display: flex; flex-direction: column; }
+  .prod-brand {
+    font-size: 0.7rem;
+    color: var(--orange);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .prod-name {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--dark);
+    line-height: 1.35;
+    margin-bottom: 8px;
+    flex: 1;
+  }
+  .prod-stars { display: flex; align-items: center; gap: 4px; margin-bottom: 10px; }
+  .stars { color: var(--yellow); font-size: 0.8rem; letter-spacing: 1px; }
+  .prod-stars .reviews { font-size: 0.72rem; color: var(--gray); }
+  .prod-price-area { margin-bottom: 12px; }
+  .prod-price-old {
+    font-size: 0.75rem;
+    color: var(--gray);
+    text-decoration: line-through;
+    margin-bottom: 1px;
+  }
+  .prod-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--dark);
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+  }
+  .prod-price .cur { font-size: 0.9rem; font-weight: 700; }
+  .prod-price-pix {
+    font-size: 0.72rem;
+    color: var(--green);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .prod-price-parcel {
+    font-size: 0.72rem;
+    color: var(--gray);
+    margin-top: 1px;
+  }
+  .btn-cart {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 10px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.02em;
+  }
+  .btn-cart:hover { background: var(--orange-dark); transform: scale(1.02); }
+  .btn-cart.outline {
+    background: transparent;
+    color: var(--orange);
+    border: 2px solid var(--orange);
+    margin-top: 6px;
+    padding: 7px;
+    font-size: 0.78rem;
+  }
+  .btn-cart.outline:hover { background: var(--orange); color: white; }
+
+  /* ===== MAIN CONTENT ===== */
+  .main-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 36px 24px;
+  }
+
+  /* ===== PROMO BANNERS ===== */
+  .promo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .promo-banner {
+    border-radius: 12px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-decoration: none;
+  }
+  .promo-banner:hover { transform: scale(1.02); }
+  .promo-banner.p1 { background: linear-gradient(135deg, #1A3A1E 0%, #2D7D3A 100%); }
+  .promo-banner.p2 { background: linear-gradient(135deg, #3A1A1A 0%, #C0392B 100%); }
+  .promo-banner.p3 { background: linear-gradient(135deg, #1A2A3A 0%, #2980B9 100%); }
+  .promo-banner .pb-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4rem;
+    opacity: 0.2;
+  }
+  .pb-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 4px;
+  }
+  .pb-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: white;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .pb-title span { color: var(--yellow); }
+  .pb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    align-self: flex-start;
+    transition: background 0.2s;
+  }
+  .pb-btn:hover { background: rgba(255,255,255,0.3); }
+
+  /* ===== CALCULADORAS ===== */
+  .tools-section {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 36px;
+    border: 1px solid var(--sand-light);
+  }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .tool-card {
+    border: 2px solid var(--gray-light);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+  }
+  .tool-card:hover {
+    border-color: var(--orange);
+    box-shadow: 0 4px 16px rgba(232,75,12,0.12);
+  }
+  .tool-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(232,75,12,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+  .tool-name {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--dark);
+  }
+  .tool-desc { font-size: 0.77rem; color: var(--gray); line-height: 1.4; }
+
+  /* ===== CALCULATOR MODAL AREA ===== */
+  .calc-area {
+    background: var(--gray-light);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 20px;
+    display: none;
+  }
+  .calc-area.active { display: block; }
+  .calc-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .calc-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dark2);
+    margin-bottom: 6px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+  }
+  .calc-field input, .calc-field select {
+    width: 100%;
+    border: 2px solid var(--sand-light);
+    border-radius: 7px;
+    padding: 10px 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s;
+  }
+  .calc-field input:focus, .calc-field select:focus { border-color: var(--orange); }
+  .calc-result {
+    background: var(--dark);
+    color: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .calc-result-item .num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--yellow);
+    line-height: 1;
+  }
+  .calc-result-item .lbl { font-size: 0.72rem; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  /* ===== BRANDS ===== */
+  .brands-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px 36px;
+  }
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .brand-card {
+    background: white;
+    border: 1px solid var(--sand-light);
+    border-radius: 10px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .brand-card:hover {
+    border-color: var(--orange);
+    box-shadow: 0 4px 12px rgba(232,75,12,0.1);
+    color: var(--orange);
+  }
+
+  /* ===== PRODUCT MAIN ===== */
+  .products-section {
+    background: var(--cream);
+    padding: 36px 0;
+  }
+  .products-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .product-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--sand-light);
+    margin-bottom: 24px;
+  }
+  .ptab {
+    padding: 12px 22px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--gray);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .ptab.active, .ptab:hover { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* ===== SERVICES ===== */
+  .services-section {
+    background: var(--dark);
+    padding: 48px 0;
+  }
+  .services-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .services-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .services-sub { color: rgba(255,255,255,0.55); font-size: 0.9rem; margin-bottom: 28px; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 24px;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .service-card:hover {
+    background: rgba(232,75,12,0.1);
+    border-color: var(--orange);
+  }
+  .svc-icon { font-size: 2rem; margin-bottom: 12px; }
+  .svc-name {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .svc-desc { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .svc-link {
+    color: var(--orange-light);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+  }
+
+  /* ===== REVIEWS ===== */
+  .reviews-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 36px 24px;
+  }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .review-card {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    border: 1px solid var(--sand-light);
+  }
+  .review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .review-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .review-name {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--dark);
+  }
+  .review-meta { font-size: 0.72rem; color: var(--gray); margin-top: 2px; }
+  .review-text { font-size: 0.85rem; color: var(--mid); line-height: 1.6; font-style: italic; }
+  .review-product { font-size: 0.75rem; color: var(--orange); font-weight: 600; margin-top: 10px; }
+  .verified { background: var(--green); color: white; font-size: 0.65rem; font-weight: 700; padding: 1px 6px; border-radius: 3px; margin-left: 6px; }
+
+  /* ===== NEWSLETTER ===== */
+  .newsletter-section {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    padding: 48px 0;
+  }
+  .newsletter-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .nl-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .nl-sub { color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-bottom: 24px; }
+  .nl-form {
+    display: flex;
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto 16px;
+  }
+  .nl-input {
+    flex: 1;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    background: rgba(255,255,255,0.95);
+  }
+  .nl-btn {
+    background: var(--dark);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 24px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .nl-btn:hover { background: var(--dark3); }
+  .nl-note { font-size: 0.75rem; color: rgba(255,255,255,0.65); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--dark);
+    padding: 48px 0 0;
+  }
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .footer-brand .logo { margin-bottom: 16px; }
+  .footer-desc { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 20px; }
+  .footer-socials { display: flex; gap: 8px; }
+  .social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    text-decoration: none;
+  }
+  .social-btn:hover { background: var(--orange); color: white; }
+  .footer-col-title {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--orange);
+    display: inline-block;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: 8px; }
+  .footer-links a {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-links a:hover { color: var(--sand-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 20px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+  .footer-pay { display: flex; align-items: center; gap: 10px; }
+  .pay-icon {
+    background: rgba(255,255,255,0.08);
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .footer-cert {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+  }
+  .cert-badge {
+    background: var(--green);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== FLOATING CART ===== */
+  .floating-whatsapp {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+    background: #25D366;
+    color: white;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+  .floating-whatsapp:hover { transform: scale(1.1); }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .floating-whatsapp:hover { animation: none; transform: scale(1.1); }
+
+  /* ===== TABS ANIMATION ===== */
+  .tab-content { display: none; }
+  .tab-content.active { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+</style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announce-bar">
+  <span>🚚 FRETE GRÁTIS</span> em compras acima de R$ 299 para todo o Brasil
+  <span class="sep">|</span>
+  <span>💳 10x SEM JUROS</span> no cartão nas melhores marcas
+  <span class="sep">|</span>
+  <span>⚡ PIX</span> com 8% de desconto extra
+  <span class="sep">|</span>
+  📞 0800 700 8800 — Seg a Sáb 7h–20h
+</div>
+
+<!-- Header -->
+<header>
+  <div class="header-main">
+    <a href="#" class="logo">
+      <div class="logo-icon">🏗️</div>
+      <div>
+        <div class="logo-text">Constro<span>BR</span></div>
+        <span class="logo-sub">Materiais de Construção</span>
+      </div>
+    </a>
+
+    <div class="search-bar">
+      <select>
+        <option>Todas Categorias</option>
+        <option>Cimento e Argamassa</option>
+        <option>Ferramentas</option>
+        <option>Hidráulica</option>
+        <option>Elétrica</option>
+        <option>Acabamento</option>
+        <option>Madeira</option>
+        <option>Tintas</option>
+      </select>
+      <input type="text" placeholder="Busque por produto, marca ou código...">
+      <button class="search-btn">🔍 Buscar</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="hbtn">
+        <span class="icon">📍</span>
+        <span class="label">CEP / Loja</span>
+      </button>
+      <button class="hbtn">
+        <span class="icon">👤</span>
+        <span class="label">Minha Conta</span>
+      </button>
+      <button class="hbtn">
+        <span class="icon">❤️</span>
+        <span class="label">Favoritos</span>
+        <span class="badge">3</span>
+      </button>
+      <a href="#" class="hbtn hbtn-cta">
+        <span class="icon">🛒</span>
+        <span class="label">Carrinho · R$ 487,90</span>
+        <span class="badge">4</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-item" href="#"><span class="nav-icon">☰</span> <span class="nav-dept">Departamentos</span></a>
+    <a class="nav-item active" href="#">Cimento & Argamassa</a>
+    <a class="nav-item" href="#">Ferramentas</a>
+    <a class="nav-item" href="#">Hidráulica</a>
+    <a class="nav-item" href="#">Elétrica</a>
+    <a class="nav-item" href="#">Acabamentos</a>
+    <a class="nav-item" href="#">Madeiras</a>
+    <a class="nav-item" href="#">Tintas</a>
+    <a class="nav-item" href="#">EPI & Segurança</a>
+    <a class="nav-item" href="#">Jardim & Área Externa</a>
+    <div class="nav-spacer"></div>
+    <a class="nav-item" href="#">🚛 Entrega Expressa</a>
+    <a class="nav-item nav-promo" href="#">🔥 Ofertas do Dia</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-main">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-content">
+      <div class="hero-badge">⚡ Mega Semana da Construção</div>
+      <h1 class="hero-title">
+        Construa<br>
+        com quem <span class="accent">entende</span><br>
+        de obra
+      </h1>
+      <p class="hero-desc">Mais de 45.000 produtos para reforma, construção e acabamento. Preço de atacado para todo o Brasil, com entrega rápida e parcelamento facilitado.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">🛒 Ver Ofertas</a>
+        <a href="#" class="btn-secondary">📦 Compra por Volume</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">45K+</div><div class="txt">Produtos</div></div>
+        <div class="hero-stat"><div class="num">500+</div><div class="txt">Marcas</div></div>
+        <div class="hero-stat"><div class="num">4,8★</div><div class="txt">Avaliação</div></div>
+        <div class="hero-stat"><div class="num">250K</div><div class="txt">Clientes</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-side">
+    <div class="side-card card1">
+      <div class="bg">🌿</div>
+      <div class="side-card-content">
+        <div class="side-card-tag">Promoção Especial</div>
+        <div class="side-card-title">Cimento Portland <span class="side-card-disc">-22%</span></div>
+      </div>
+    </div>
+    <div class="side-card card2">
+      <div class="bg">🔧</div>
+      <div class="side-card-content">
+        <div class="side-card-tag">Lançamento</div>
+        <div class="side-card-title">Furadeira de Impacto 850W</div>
+      </div>
+    </div>
+    <div class="side-card card3">
+      <div class="bg">🪵</div>
+      <div class="side-card-content">
+        <div class="side-card-tag">Kit Obra</div>
+        <div class="side-card-title">Madeiras &amp; Forros <span class="side-card-disc">-18%</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Trust Bar -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon">🚚</div>
+      <div>
+        <div class="trust-title">Entrega Rápida</div>
+        <div class="trust-sub">Frete grátis acima de R$ 299 • Expresso 24h disponível</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">💳</div>
+      <div>
+        <div class="trust-title">10x Sem Juros</div>
+        <div class="trust-sub">No cartão de crédito • Boleto e PIX com desconto</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🔄</div>
+      <div>
+        <div class="trust-title">Troca Fácil</div>
+        <div class="trust-sub">30 dias para trocar ou devolver • Sem burocracia</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🛡️</div>
+      <div>
+        <div class="trust-title">Compra Garantida</div>
+        <div class="trust-sub">Site seguro • Nota fiscal em todas as compras</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Categories -->
+<div class="categories-section">
+  <div class="sec-header">
+    <h2 class="sec-title">Departamentos</h2>
+    <a href="#" class="sec-link">Ver todos →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="#" class="cat-card">
+      <div class="cat-icon bg-orange">🧱</div>
+      <div class="cat-name">Cimento & Argamassa</div>
+      <div class="cat-count">842 produtos</div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-icon bg-blue">🔧</div>
+      <div class="cat-name">Ferramentas Elétricas</div>
+      <div class="cat-count">1.240 produtos</div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-icon bg-teal">🚿</div>
+      <div class="cat-name">Hidráulica & Encanamento</div>
+      <div class="cat-count">3.100 produtos</div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-icon bg-yellow">⚡</div>
+      <div class="cat-name">Material Elétrico</div>
+      <div class="cat-count">5.650 produtos</div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-icon bg-purple">🪟</div>
+      <div class="cat-name">Pisos & Revestimentos</div>
+      <div class="cat-count">2.890 produtos</div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-icon bg-green">🎨</div>
+      <div class="cat-name">Tintas & Vernizes</div>
+      <div class="cat-count">1.780 produtos</div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-icon bg-brown">🪵</div>
+      <div class="cat-name">Madeiras & Forros</div>
+      <div class="cat-count">960 produtos</div>
+    </a>
+    <a href="#" class="cat-card">
+      <div class="cat-icon bg-red">🦺</div>
+      <div class="cat-name">EPI & Segurança</div>
+      <div class="cat-count">720 produtos</div>
+    </a>
+  </div>
+</div>
+
+<!-- Flash Sale -->
+<div class="offers-section">
+  <div class="offers-inner">
+    <div class="offers-header">
+      <div class="offers-title">
+        🔥 Oferta Relâmpago
+        <span class="fire-badge">HOJE</span>
+      </div>
+      <div class="countdown">
+        <span class="count-label">Termina em:</span>
+        <div class="count-blocks">
+          <div class="count-block">
+            <div class="count-num" id="h">04</div>
+            <div class="count-unit">HRS</div>
+          </div>
+          <span class="count-sep">:</span>
+          <div class="count-block">
+            <div class="count-num" id="m">37</div>
+            <div class="count-unit">MIN</div>
+          </div>
+          <span class="count-sep">:</span>
+          <div class="count-block">
+            <div class="count-num" id="s">22</div>
+            <div class="count-unit">SEG</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="product-grid">
+      <!-- Product 1 -->
+      <div class="prod-card">
+        <div class="prod-badges">
+          <span class="prod-badge badge-off">-35%</span>
+          <span class="prod-badge badge-pix">PIX</span>
+        </div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🧱</div>
+        <div class="prod-body">
+          <div class="prod-brand">Votorantim</div>
+          <div class="prod-name">Cimento Portland CP-II 50kg</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(4.821)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 42,90</div>
+            <div class="prod-price"><span class="cur">R$</span> 27,90</div>
+            <div class="prod-price-pix">🔵 R$ 25,67 no PIX</div>
+            <div class="prod-price-parcel">ou 3x de R$ 9,30 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <!-- Product 2 -->
+      <div class="prod-card">
+        <div class="prod-badges">
+          <span class="prod-badge badge-off">-28%</span>
+          <span class="prod-badge badge-hot">HOT</span>
+        </div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🔧</div>
+        <div class="prod-body">
+          <div class="prod-brand">Bosch</div>
+          <div class="prod-name">Furadeira de Impacto GSB 850 RE 850W Bivolt</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(2.347)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 589,00</div>
+            <div class="prod-price"><span class="cur">R$</span> 423,90</div>
+            <div class="prod-price-pix">🔵 R$ 390,00 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 42,39 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <!-- Product 3 -->
+      <div class="prod-card">
+        <div class="prod-badges">
+          <span class="prod-badge badge-new">NOVO</span>
+        </div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🚿</div>
+        <div class="prod-body">
+          <div class="prod-brand">Tigre</div>
+          <div class="prod-name">Kit Registro de Gaveta 3/4" Completo</div>
+          <div class="prod-stars"><span class="stars">★★★★☆</span><span class="reviews">(891)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 78,50</div>
+            <div class="prod-price"><span class="cur">R$</span> 54,90</div>
+            <div class="prod-price-pix">🔵 R$ 50,51 no PIX</div>
+            <div class="prod-price-parcel">ou 5x de R$ 10,98 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <!-- Product 4 -->
+      <div class="prod-card">
+        <div class="prod-badges">
+          <span class="prod-badge badge-off">-42%</span>
+        </div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🎨</div>
+        <div class="prod-body">
+          <div class="prod-brand">Suvinil</div>
+          <div class="prod-name">Tinta Acrílica Premium 18L Branco Gelo</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(3.102)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 249,00</div>
+            <div class="prod-price"><span class="cur">R$</span> 144,90</div>
+            <div class="prod-price-pix">🔵 R$ 133,31 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 14,49 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <!-- Product 5 -->
+      <div class="prod-card">
+        <div class="prod-badges">
+          <span class="prod-badge badge-off">-20%</span>
+          <span class="prod-badge badge-hot">ATACADO</span>
+        </div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">⚡</div>
+        <div class="prod-body">
+          <div class="prod-brand">Schneider</div>
+          <div class="prod-name">Quadro Distribuição 12 Disjuntores Embutir</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(1.654)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 189,00</div>
+            <div class="prod-price"><span class="cur">R$</span> 151,20</div>
+            <div class="prod-price-pix">🔵 R$ 139,10 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 15,12 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Section -->
+<div class="main-section">
+  <!-- Promo Banners -->
+  <div class="promo-grid">
+    <a href="#" class="promo-banner p1">
+      <div class="pb-icon">🪵</div>
+      <div>
+        <div class="pb-label">Kit Reforma</div>
+        <div class="pb-title">Madeiras & Forros<br><span>ATÉ -30%</span></div>
+      </div>
+      <span class="pb-btn">Ver Produtos →</span>
+    </a>
+    <a href="#" class="promo-banner p2">
+      <div class="pb-icon">🪠</div>
+      <div>
+        <div class="pb-label">Hidráulica Completa</div>
+        <div class="pb-title">Tubulação &<br><span>Conexões</span></div>
+      </div>
+      <span class="pb-btn">Ver Produtos →</span>
+    </a>
+    <a href="#" class="promo-banner p3">
+      <div class="pb-icon">💡</div>
+      <div>
+        <div class="pb-label">Material Elétrico</div>
+        <div class="pb-title">LED e Automação<br><span>LANÇAMENTOS</span></div>
+      </div>
+      <span class="pb-btn">Ver Produtos →</span>
+    </a>
+  </div>
+
+  <!-- Calculadoras -->
+  <div class="tools-section">
+    <div class="sec-header">
+      <h2 class="sec-title">🧮 Calculadoras de Obra</h2>
+      <span style="font-size:0.82rem;color:var(--gray)">Estime materiais sem erro</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card" onclick="showCalc('alvenaria')">
+        <div class="tool-icon">🧱</div>
+        <div class="tool-name">Alvenaria / Tijolos</div>
+        <div class="tool-desc">Calcule tijolos, cimento e areia para paredes</div>
+      </div>
+      <div class="tool-card" onclick="showCalc('concreto')">
+        <div class="tool-icon">🏗️</div>
+        <div class="tool-name">Concreto & Contrapiso</div>
+        <div class="tool-desc">Traço certo para vigas, lajes e pisos</div>
+      </div>
+      <div class="tool-card" onclick="showCalc('tinta')">
+        <div class="tool-icon">🎨</div>
+        <div class="tool-name">Consumo de Tinta</div>
+        <div class="tool-desc">Latões necessários por ambiente</div>
+      </div>
+      <div class="tool-card" onclick="showCalc('piso')">
+        <div class="tool-icon">◻️</div>
+        <div class="tool-name">Pisos & Revestimentos</div>
+        <div class="tool-desc">Caixas de cerâmica com sobra de 10%</div>
+      </div>
+    </div>
+    <div class="calc-area" id="calc-alvenaria">
+      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;color:var(--dark)">🧱 Calculadora de Alvenaria</strong>
+      <div class="calc-row" style="margin-top:16px">
+        <div class="calc-field"><label>Comprimento da parede (m)</label><input type="number" id="aw" value="10" placeholder="ex: 10"></div>
+        <div class="calc-field"><label>Altura da parede (m)</label><input type="number" id="ah" value="2.8" placeholder="ex: 2.8"></div>
+        <div class="calc-field"><label>Tipo de Tijolo</label>
+          <select id="at">
+            <option value="0.025">Tijolo Maciço (25/m²)</option>
+            <option value="0.018" selected>Tijolo 8 Furos (18/m²)</option>
+            <option value="0.009">Bloco de Concreto (9/m²)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcAlvenaria()">📊 Calcular Agora</button>
+      <div class="calc-result" id="res-alvenaria" style="display:none">
+        <div class="calc-result-item"><div class="num" id="r-tijolos">0</div><div class="lbl">Tijolos</div></div>
+        <div class="calc-result-item"><div class="num" id="r-cimento">0</div><div class="lbl">Sacos de Cimento 50kg</div></div>
+        <div class="calc-result-item"><div class="num" id="r-areia">0</div><div class="lbl">m³ de Areia</div></div>
+        <div class="calc-result-item"><div class="num" id="r-area">0</div><div class="lbl">m² de Parede</div></div>
+        <button class="btn-primary" style="font-size:0.82rem;padding:10px 18px" onclick="addToCart()">🛒 Montar Carrinho</button>
+      </div>
+    </div>
+    <div class="calc-area" id="calc-tinta">
+      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;color:var(--dark)">🎨 Calculadora de Tinta</strong>
+      <div class="calc-row" style="margin-top:16px">
+        <div class="calc-field"><label>Área total (m²)</label><input type="number" id="ta" value="60" placeholder="ex: 60"></div>
+        <div class="calc-field"><label>Número de demãos</label>
+          <select id="td"><option value="1">1 demão</option><option value="2" selected>2 demãos</option><option value="3">3 demãos</option></select>
+        </div>
+        <div class="calc-field"><label>Tipo de Tinta</label>
+          <select id="tt"><option value="10">Acrílica (10 m²/L)</option><option value="12" selected>Premium (12 m²/L)</option><option value="8">Látex (8 m²/L)</option></select>
+        </div>
+      </div>
+      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcTinta()">📊 Calcular Agora</button>
+      <div class="calc-result" id="res-tinta" style="display:none">
+        <div class="calc-result-item"><div class="num" id="r-litros">0</div><div class="lbl">Litros Necessários</div></div>
+        <div class="calc-result-item"><div class="num" id="r-lata18">0</div><div class="lbl">Latas de 18L</div></div>
+        <div class="calc-result-item"><div class="num" id="r-lata3">0</div><div class="lbl">Latas de 3,6L complemento</div></div>
+      </div>
+    </div>
+    <div class="calc-area" id="calc-concreto">
+      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;color:var(--dark)">🏗️ Calculadora de Concreto</strong>
+      <div class="calc-row" style="margin-top:16px">
+        <div class="calc-field"><label>Volume (m³)</label><input type="number" id="cv" value="3" placeholder="ex: 3"></div>
+        <div class="calc-field"><label>Traço</label>
+          <select id="ct"><option value="320">Fck 20 MPa — 320kg/m³</option><option value="380" selected>Fck 25 MPa — 380kg/m³</option><option value="420">Fck 30 MPa — 420kg/m³</option></select>
+        </div>
+        <div class="calc-field"><label>Aplicação</label>
+          <select><option>Contrapiso</option><option selected>Viga/Pilar</option><option>Laje</option></select>
+        </div>
+      </div>
+      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcConcreto()">📊 Calcular Agora</button>
+      <div class="calc-result" id="res-concreto" style="display:none">
+        <div class="calc-result-item"><div class="num" id="r-sacos">0</div><div class="lbl">Sacos Cimento 50kg</div></div>
+        <div class="calc-result-item"><div class="num" id="r-brita">0</div><div class="lbl">m³ de Brita</div></div>
+        <div class="calc-result-item"><div class="num" id="r-areia2">0</div><div class="lbl">m³ de Areia</div></div>
+      </div>
+    </div>
+    <div class="calc-area" id="calc-piso">
+      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;color:var(--dark)">◻️ Calculadora de Piso</strong>
+      <div class="calc-row" style="margin-top:16px">
+        <div class="calc-field"><label>Largura do ambiente (m)</label><input type="number" id="pw" value="5" placeholder="ex: 5"></div>
+        <div class="calc-field"><label>Comprimento do ambiente (m)</label><input type="number" id="pl" value="4" placeholder="ex: 4"></div>
+        <div class="calc-field"><label>Tamanho da peça (cm)</label>
+          <select id="ps"><option value="0.09">30x30 cm</option><option value="0.16" selected>40x40 cm</option><option value="0.25">50x50 cm</option><option value="0.36">60x60 cm</option><option value="0.56">75x75 cm</option></select>
+        </div>
+      </div>
+      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcPiso()">📊 Calcular Agora</button>
+      <div class="calc-result" id="res-piso" style="display:none">
+        <div class="calc-result-item"><div class="num" id="r-m2">0</div><div class="lbl">m² do Ambiente</div></div>
+        <div class="calc-result-item"><div class="num" id="r-pecas">0</div><div class="lbl">Peças (c/ 10% sobra)</div></div>
+        <div class="calc-result-item"><div class="num" id="r-caixas">0</div><div class="lbl">Caixas (c/ 10% sobra)</div></div>
+        <div class="calc-result-item"><div class="num" id="r-rejunte">0</div><div class="lbl">Kg de Rejunte</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Products Section -->
+<div class="products-section">
+  <div class="products-inner">
+    <div class="sec-header">
+      <h2 class="sec-title">Mais Vendidos</h2>
+      <a href="#" class="sec-link">Ver catálogo completo →</a>
+    </div>
+    <div class="product-tabs">
+      <div class="ptab active" onclick="switchTab(0)">🏆 Mais Vendidos</div>
+      <div class="ptab" onclick="switchTab(1)">⭐ Mais Avaliados</div>
+      <div class="ptab" onclick="switchTab(2)">🆕 Lançamentos</div>
+      <div class="ptab" onclick="switchTab(3)">🔥 Em Promoção</div>
+      <div class="ptab" onclick="switchTab(4)">🏗️ Para Construtoras</div>
+    </div>
+    <div class="tab-content active" id="tab0">
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-hot">FAVORITO</span></div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🧰</div>
+        <div class="prod-body">
+          <div class="prod-brand">DeWalt</div>
+          <div class="prod-name">Jogo de Brocas SDS Plus 8 peças para Concreto</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(5.230)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 87,90</div>
+            <div class="prod-price-pix">🔵 R$ 80,87 no PIX</div>
+            <div class="prod-price-parcel">ou 3x de R$ 29,30</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-off">-15%</span></div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🪟</div>
+        <div class="prod-body">
+          <div class="prod-brand">Portobello</div>
+          <div class="prod-name">Porcelanato Polido Marmore Calacata 60x120cm</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(1.870)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 189,90/m²</div>
+            <div class="prod-price"><span class="cur">R$</span> 161,41<span style="font-size:0.8rem">/m²</span></div>
+            <div class="prod-price-pix">🔵 R$ 148,50 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 16,14</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-new">NOVO</span></div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">💡</div>
+        <div class="prod-body">
+          <div class="prod-brand">Intelbras</div>
+          <div class="prod-name">Kit Interruptor Smart 4 Teclas Wi-Fi izy</div>
+          <div class="prod-stars"><span class="stars">★★★★☆</span><span class="reviews">(987)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 149,90</div>
+            <div class="prod-price-pix">🔵 R$ 137,91 no PIX</div>
+            <div class="prod-price-parcel">ou 6x de R$ 24,98</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-off">-25%</span></div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🚿</div>
+        <div class="prod-body">
+          <div class="prod-brand">Deca</div>
+          <div class="prod-name">Cuba Embutir Retangular Branca L810 45x35cm</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(2.134)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 289,00</div>
+            <div class="prod-price"><span class="cur">R$</span> 216,75</div>
+            <div class="prod-price-pix">🔵 R$ 199,41 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 21,67</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-hot">ATACADO</span></div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🔌</div>
+        <div class="prod-body">
+          <div class="prod-brand">Pial Legrand</div>
+          <div class="prod-name">Tomada 2P+T 20A Bipolar com USB-A 10W</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(6.781)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 34,90</div>
+            <div class="prod-price-pix">🔵 R$ 32,11 no PIX</div>
+            <div class="prod-price-parcel">ou 2x de R$ 17,45</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab1">
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-hot">⭐ TOP</span></div>
+        <div class="prod-wish">♡</div>
+        <div class="prod-img">🔨</div>
+        <div class="prod-body">
+          <div class="prod-brand">Stanley</div>
+          <div class="prod-name">Martelo Cabo de Madeira 27mm 567g</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(8.432)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 49,90</div>
+            <div class="prod-price-pix">🔵 R$ 45,91 no PIX</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab2"></div>
+    <div class="tab-content" id="tab3"></div>
+    <div class="tab-content" id="tab4"></div>
+  </div>
+</div>
+
+<!-- Brands -->
+<div class="brands-section">
+  <div class="sec-header">
+    <h2 class="sec-title">Marcas Líderes</h2>
+    <a href="#" class="sec-link">Ver todas as marcas →</a>
+  </div>
+  <div class="brands-grid">
+    <div class="brand-card">Bosch</div>
+    <div class="brand-card">Votorantim</div>
+    <div class="brand-card">Tigre</div>
+    <div class="brand-card">Suvinil</div>
+    <div class="brand-card">DeWalt</div>
+    <div class="brand-card">Deca</div>
+    <div class="brand-card">Schneider</div>
+    <div class="brand-card">Portobello</div>
+  </div>
+</div>
+
+<!-- Services -->
+<div class="services-section">
+  <div class="services-inner">
+    <div class="services-title">🛠️ Soluções para sua Obra</div>
+    <div class="services-sub">Muito mais que produtos — somos parceiros na construção do seu projeto</div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="svc-icon">📦</div>
+        <div class="svc-name">Compra por Volume / Atacado</div>
+        <div class="svc-desc">Descontos progressivos para construtoras, empreiteiras e compras em grande escala. Condições especiais a partir de R$ 5.000.</div>
+        <a href="#" class="svc-link">Solicitar Orçamento →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🏗️</div>
+        <div class="svc-name">Lista de Materiais por Projeto</div>
+        <div class="svc-desc">Envie a planta ou memorial descritivo da obra e nossa equipe monta a lista completa com orçamento em 24h.</div>
+        <a href="#" class="svc-link">Enviar Projeto →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🚚</div>
+        <div class="svc-name">Entrega em Obra</div>
+        <div class="svc-desc">Caminhão truck e carreta para grandes volumes. Agendamos o horário ideal para não atrapalhar o cronograma.</div>
+        <a href="#" class="svc-link">Agendar Entrega →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">👨‍🔧</div>
+        <div class="svc-name">Indicação de Profissionais</div>
+        <div class="svc-desc">Rede de pedreiros, eletricistas, encanadores e pintores verificados. Orçamento gratuito na sua região.</div>
+        <a href="#" class="svc-link">Encontrar Profissional →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">💰</div>
+        <div class="svc-name">Crédito para Construção</div>
+        <div class="svc-desc">Parceria com financeiras para crédito rápido. Aprovação em até 2h. Útil para reformas e obras de médio porte.</div>
+        <a href="#" class="svc-link">Simular Crédito →</a>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🎓</div>
+        <div class="svc-name">Tutoriais & Conteúdo</div>
+        <div class="svc-desc">Vídeos passo a passo, artigos técnicos e dicas de profissionais. Tudo para você executar com segurança.</div>
+        <a href="#" class="svc-link">Acessar Conteúdo →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reviews -->
+<div class="reviews-section">
+  <div class="sec-header">
+    <h2 class="sec-title">⭐ O Que Dizem Nossos Clientes</h2>
+    <span style="color:var(--gray);font-size:0.85rem">+48.000 avaliações verificadas</span>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">RC</div>
+        <div>
+          <div class="review-name">Roberto C. <span class="verified">✓ Verificado</span></div>
+          <div class="review-stars" style="color:var(--yellow);font-size:0.85rem">★★★★★</div>
+          <div class="review-meta">Construtor Autônomo · São Paulo, SP</div>
+        </div>
+      </div>
+      <div class="review-text">"Compro sempre aqui para minhas obras. Preço competitivo, entrega certinha e nota fiscal em tudo. O atendimento por WhatsApp resolve muito rápido qualquer dúvida."</div>
+      <div class="review-product">🧱 Cimento Portland CP-II 50kg × 50 sacos</div>
+    </div>
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar" style="background:var(--green)">MP</div>
+        <div>
+          <div class="review-name">Mariana P. <span class="verified">✓ Verificado</span></div>
+          <div class="review-stars" style="color:var(--yellow);font-size:0.85rem">★★★★★</div>
+          <div class="review-meta">Arquiteta · Belo Horizonte, MG</div>
+        </div>
+      </div>
+      <div class="review-text">"Uso para indicar para meus clientes. A calculadora de piso ajuda muito na hora de passar orçamento. O porcelanato chegou embalado perfeitamente, sem nenhuma peça quebrada."</div>
+      <div class="review-product">◻️ Porcelanato Polido Calacata 60x120</div>
+    </div>
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar" style="background:var(--mid)">JF</div>
+        <div>
+          <div class="review-name">José F. <span class="verified">✓ Verificado</span></div>
+          <div class="review-stars" style="color:var(--yellow);font-size:0.85rem">★★★★☆</div>
+          <div class="review-meta">Proprietário · Fortaleza, CE</div>
+        </div>
+      </div>
+      <div class="review-text">"Reforma do banheiro comprei tudo aqui. Deca, Tigre e mais. Chegou em 3 dias aqui no Ceará. Só tirei uma estrela porque o carrinho de compras poderia salvar mais itens."</div>
+      <div class="review-product">🚿 Kit Banheiro Completo Deca</div>
+    </div>
+  </div>
+</div>
+
+<!-- Newsletter -->
+<div class="newsletter-section">
+  <div class="newsletter-inner">
+    <div class="nl-title">💡 Fique por Dentro das Melhores Ofertas</div>
+    <div class="nl-sub">Receba cupons exclusivos, promoções e dicas de obra diretamente no seu e-mail</div>
+    <div class="nl-form">
+      <input class="nl-input" type="email" placeholder="Seu melhor e-mail...">
+      <button class="nl-btn">Quero Receber! →</button>
+    </div>
+    <div class="nl-note">🔒 Sem spam. Cancele quando quiser. LGPD compliant.</div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="margin-bottom:16px;display:inline-flex">
+        <div class="logo-icon">🏗️</div>
+        <div>
+          <div class="logo-text" style="color:white">Constro<span>BR</span></div>
+          <span class="logo-sub">Materiais de Construção</span>
+        </div>
+      </a>
+      <div class="footer-desc">Desde 2008 fornecendo materiais de qualidade para obras, reformas e construções em todo o Brasil. Mais de 250 mil clientes satisfeitos.</div>
+      <div class="footer-socials">
+        <a href="#" class="social-btn">📘</a>
+        <a href="#" class="social-btn">📸</a>
+        <a href="#" class="social-btn">▶️</a>
+        <a href="#" class="social-btn">💼</a>
+        <a href="#" class="social-btn">📱</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Departamentos</div>
+      <div class="footer-links">
+        <a href="#">🧱 Cimento & Argamassa</a>
+        <a href="#">🔧 Ferramentas</a>
+        <a href="#">🚿 Hidráulica</a>
+        <a href="#">⚡ Elétrica</a>
+        <a href="#">🎨 Tintas</a>
+        <a href="#">◻️ Pisos</a>
+        <a href="#">🪵 Madeiras</a>
+        <a href="#">🦺 EPI</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Minha Conta</div>
+      <div class="footer-links">
+        <a href="#">👤 Meus Dados</a>
+        <a href="#">📦 Meus Pedidos</a>
+        <a href="#">❤️ Lista de Desejos</a>
+        <a href="#">⭐ Minhas Avaliações</a>
+        <a href="#">🏢 Conta Jurídica</a>
+        <a href="#">💳 Meus Cartões</a>
+        <a href="#">📍 Meus Endereços</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Atendimento</div>
+      <div class="footer-links">
+        <a href="#">💬 Central de Ajuda</a>
+        <a href="#">📱 WhatsApp</a>
+        <a href="#">🔄 Trocas e Devoluções</a>
+        <a href="#">🚚 Rastrear Pedido</a>
+        <a href="#">📄 2ª Via de NF</a>
+        <a href="#">🏪 Nossas Lojas</a>
+        <a href="#">📧 Fale Conosco</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Institucional</div>
+      <div class="footer-links">
+        <a href="#">🏢 Sobre Nós</a>
+        <a href="#">👔 Trabalhe Conosco</a>
+        <a href="#">🤝 Seja um Parceiro</a>
+        <a href="#">📰 Blog da Obra</a>
+        <a href="#">🔐 Política de Privacidade</a>
+        <a href="#">📋 Termos de Uso</a>
+        <a href="#">♿ Acessibilidade</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 ConstroBR Materiais de Construção LTDA · CNPJ 12.345.678/0001-90 · Todos os direitos reservados</div>
+    <div class="footer-pay">
+      <span style="font-size:0.72rem;color:rgba(255,255,255,0.3)">Pagamentos:</span>
+      <div class="pay-icon">VISA</div>
+      <div class="pay-icon">MASTER</div>
+      <div class="pay-icon">PIX</div>
+      <div class="pay-icon">BOLETO</div>
+      <div class="pay-icon">ELO</div>
+      <div class="pay-icon">AMEX</div>
+    </div>
+    <div class="footer-cert">
+      <span class="cert-badge">SSL</span>
+      <span class="cert-badge" style="background:var(--orange)">LGPD</span>
+      <span>Compra segura e protegida</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="#" class="floating-whatsapp" title="Fale conosco no WhatsApp">📱</a>
+
+<script>
+  // ===== COUNTDOWN =====
+  let targetTime = new Date().getTime() + (4 * 3600 + 37 * 60 + 22) * 1000;
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = targetTime - now;
+    if (diff <= 0) return;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('h').textContent = String(h).padStart(2,'0');
+    document.getElementById('m').textContent = String(m).padStart(2,'0');
+    document.getElementById('s').textContent = String(s).padStart(2,'0');
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // ===== TABS =====
+  function switchTab(idx) {
+    document.querySelectorAll('.ptab').forEach((t,i) => t.classList.toggle('active', i===idx));
+    document.querySelectorAll('.tab-content').forEach((t,i) => t.classList.toggle('active', i===idx));
+  }
+
+  // ===== CALCULADORAS =====
+  function showCalc(id) {
+    document.querySelectorAll('.calc-area').forEach(c => c.classList.remove('active'));
+    const el = document.getElementById('calc-'+id);
+    if (el) el.classList.add('active');
+    document.querySelectorAll('.tool-card').forEach(c => c.style.borderColor = '');
+  }
+
+  function calcAlvenaria() {
+    const w = parseFloat(document.getElementById('aw').value) || 0;
+    const h = parseFloat(document.getElementById('ah').value) || 0;
+    const ratio = parseFloat(document.getElementById('at').value);
+    const area = w * h;
+    const tijolos = Math.ceil(area / ratio * 1.1);
+    const cimento = Math.ceil(area * 0.8 / 50);
+    const areia = (area * 0.04).toFixed(2);
+    document.getElementById('r-tijolos').textContent = tijolos.toLocaleString('pt-BR');
+    document.getElementById('r-cimento').textContent = cimento;
+    document.getElementById('r-areia').textContent = areia;
+    document.getElementById('r-area').textContent = area.toFixed(1);
+    document.getElementById('res-alvenaria').style.display = 'flex';
+  }
+
+  function calcTinta() {
+    const area = parseFloat(document.getElementById('ta').value) || 0;
+    const demãos = parseInt(document.getElementById('td').value);
+    const rend = parseInt(document.getElementById('tt').value);
+    const litros = Math.ceil(area * demãos / rend * 1.1);
+    const lata18 = Math.floor(litros / 18);
+    const resto = litros % 18;
+    const lata3 = Math.ceil(resto / 3.6);
+    document.getElementById('r-litros').textContent = litros;
+    document.getElementById('r-lata18').textContent = lata18;
+    document.getElementById('r-lata3').textContent = lata3;
+    document.getElementById('res-tinta').style.display = 'flex';
+  }
+
+  function calcConcreto() {
+    const vol = parseFloat(document.getElementById('cv').value) || 0;
+    const kg = parseInt(document.getElementById('ct').value);
+    const sacos = Math.ceil(vol * kg / 50 * 1.05);
+    const brita = (vol * 0.9).toFixed(2);
+    const areia = (vol * 0.8).toFixed(2);
+    document.getElementById('r-sacos').textContent = sacos;
+    document.getElementById('r-brita').textContent = brita;
+    document.getElementById('r-areia2').textContent = areia;
+    document.getElementById('res-concreto').style.display = 'flex';
+  }
+
+  function calcPiso() {
+    const w = parseFloat(document.getElementById('pw').value) || 0;
+    const l = parseFloat(document.getElementById('pl').value) || 0;
+    const ps = parseFloat(document.getElementById('ps').value);
+    const area = w * l;
+    const pecas = Math.ceil(area / ps * 1.1);
+    const caixas = Math.ceil(pecas / Math.round(1/ps));
+    const rejunte = Math.ceil(area * 0.25);
+    document.getElementById('r-m2').textContent = area.toFixed(1);
+    document.getElementById('r-pecas').textContent = pecas.toLocaleString('pt-BR');
+    document.getElementById('r-caixas').textContent = caixas;
+    document.getElementById('r-rejunte').textContent = rejunte;
+    document.getElementById('res-piso').style.display = 'flex';
+  }
+
+  function addCart(btn) {
+    const orig = btn.textContent;
+    btn.textContent = '✅ Adicionado!';
+    btn.style.background = '#2D7D3A';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+    }, 1800);
+    // Update badge
+    const badge = document.querySelector('.hbtn-cta .badge');
+    if (badge) badge.textContent = parseInt(badge.textContent||0) + 1;
+  }
+
+  function addToCart() {
+    alert('✅ Materiais adicionados ao carrinho! Confira as melhores ofertas de cimento, areia e tijolo.');
+  }
+</script>
+</body>
+</html>
