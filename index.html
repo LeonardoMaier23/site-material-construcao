@@ -998,23 +998,38 @@
     background: white;
     border: 1px solid var(--sand-light);
     border-radius: 10px;
-    height: 70px;
+    height: 80px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 5px;
     cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.18s;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 8px;
+  }
+  .brand-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--brand-color, var(--orange));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .brand-card:hover { border-color: var(--brand-color, var(--orange)); box-shadow: 0 4px 14px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .brand-card:hover::before { opacity: 1; }
+  .brand-logo-svg { width: 100%; max-height: 38px; object-fit: contain; display: flex; align-items: center; justify-content: center; }
+  .brand-logo-svg svg { max-height: 38px; width: auto; max-width: 100%; }
+  .brand-name-tag {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
-    font-size: 1rem;
-    color: var(--mid);
+    font-size: 0.72rem;
+    color: var(--gray);
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .brand-card:hover {
-    border-color: var(--orange);
-    box-shadow: 0 4px 12px rgba(232,75,12,0.1);
-    color: var(--orange);
   }
 
   /* ===== PRODUCT MAIN ===== */
@@ -1302,32 +1317,91 @@
   }
 
   /* ===== FLOATING CART ===== */
-  .floating-whatsapp {
+  .wpp-wrapper {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    z-index: 999;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .wpp-bubble {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    max-width: 240px;
+    display: none;
+    position: relative;
+    animation: popIn 0.25s ease;
+  }
+  .wpp-bubble.show { display: block; }
+  @keyframes popIn { from { opacity:0; transform: scale(0.85) translateY(10px); } to { opacity:1; transform: scale(1) translateY(0); } }
+  .wpp-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; right: 20px;
+    width: 16px; height: 16px;
+    background: white;
+    transform: rotate(45deg);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.06);
+  }
+  .wpp-bubble-close {
+    position: absolute;
+    top: 6px; right: 8px;
+    font-size: 0.75rem;
+    color: var(--gray);
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+    padding: 2px 4px;
+  }
+  .wpp-bubble-close:hover { color: var(--dark); }
+  .wpp-bubble-text {
+    font-size: 0.85rem;
+    color: var(--dark);
+    line-height: 1.45;
+    margin-bottom: 10px;
+    padding-right: 16px;
+  }
+  .wpp-bubble-text strong { color: #25D366; }
+  .wpp-bubble-btn {
+    display: block;
     background: #25D366;
     color: white;
-    width: 56px;
-    height: 56px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .wpp-bubble-btn:hover { background: #1ebe5d; }
+  .floating-whatsapp {
+    background: #25D366;
+    color: white;
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    box-shadow: 0 4px 20px rgba(37,211,102,0.45);
     cursor: pointer;
-    animation: float 3s ease-in-out infinite;
+    animation: floatWpp 3s ease-in-out infinite;
     text-decoration: none;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
   }
-  .floating-whatsapp:hover { transform: scale(1.1); }
-  @keyframes float {
+  .floating-whatsapp:hover { animation: none; transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
+  @keyframes floatWpp {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-6px); }
   }
-  .floating-whatsapp:hover { animation: none; transform: scale(1.1); }
 
   /* ===== TABS ANIMATION ===== */
   .tab-content { display: none; }
@@ -2491,14 +2565,90 @@
     <a href="#" class="sec-link">Ver todas as marcas →</a>
   </div>
   <div class="brands-grid">
-    <div class="brand-card">Bosch</div>
-    <div class="brand-card">Votorantim</div>
-    <div class="brand-card">Tigre</div>
-    <div class="brand-card">Suvinil</div>
-    <div class="brand-card">DeWalt</div>
-    <div class="brand-card">Deca</div>
-    <div class="brand-card">Schneider</div>
-    <div class="brand-card">Portobello</div>
+    <!-- Bosch -->
+    <div class="brand-card" style="--brand-color:#E20015" onclick="showToast('🔍 Filtrando produtos Bosch...')">
+      <div class="brand-logo-svg">
+        <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="40" rx="4" fill="#E20015"/>
+          <text x="60" y="28" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="white" letter-spacing="1">BOSCH</text>
+        </svg>
+      </div>
+      <span class="brand-name-tag">Ferramentas & Elétrica</span>
+    </div>
+    <!-- Votorantim -->
+    <div class="brand-card" style="--brand-color:#003087" onclick="showToast('🔍 Filtrando produtos Votorantim...')">
+      <div class="brand-logo-svg">
+        <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="40" rx="4" fill="#003087"/>
+          <text x="60" y="16" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="#78A0D4" letter-spacing="2">CIMENTOS</text>
+          <text x="60" y="32" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="16" fill="white" letter-spacing="0.5">VOTORANTIM</text>
+        </svg>
+      </div>
+      <span class="brand-name-tag">Cimento & Argamassa</span>
+    </div>
+    <!-- Tigre -->
+    <div class="brand-card" style="--brand-color:#F47920" onclick="showToast('🔍 Filtrando produtos Tigre...')">
+      <div class="brand-logo-svg">
+        <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="40" rx="4" fill="#F47920"/>
+          <text x="60" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="24" fill="white" letter-spacing="2">TIGRE</text>
+        </svg>
+      </div>
+      <span class="brand-name-tag">Hidráulica & PVC</span>
+    </div>
+    <!-- Suvinil -->
+    <div class="brand-card" style="--brand-color:#702082" onclick="showToast('🔍 Filtrando produtos Suvinil...')">
+      <div class="brand-logo-svg">
+        <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="40" rx="4" fill="#702082"/>
+          <text x="60" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="20" fill="white" letter-spacing="1">SUVINIL</text>
+        </svg>
+      </div>
+      <span class="brand-name-tag">Tintas & Revestimentos</span>
+    </div>
+    <!-- DeWalt -->
+    <div class="brand-card" style="--brand-color:#FEBD17" onclick="showToast('🔍 Filtrando produtos DeWalt...')">
+      <div class="brand-logo-svg">
+        <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="40" rx="4" fill="#1A1A1A"/>
+          <text x="60" y="27" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="20" fill="#FEBD17" letter-spacing="1">DeWALT</text>
+        </svg>
+      </div>
+      <span class="brand-name-tag">Ferramentas Elétricas</span>
+    </div>
+    <!-- Deca -->
+    <div class="brand-card" style="--brand-color:#0057A8" onclick="showToast('🔍 Filtrando produtos Deca...')">
+      <div class="brand-logo-svg">
+        <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="40" rx="4" fill="#0057A8"/>
+          <text x="60" y="28" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="26" fill="white" letter-spacing="3">DECA</text>
+        </svg>
+      </div>
+      <span class="brand-name-tag">Louças & Metais</span>
+    </div>
+    <!-- Schneider Electric -->
+    <div class="brand-card" style="--brand-color:#3DCD58" onclick="showToast('🔍 Filtrando produtos Schneider...')">
+      <div class="brand-logo-svg">
+        <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="40" rx="4" fill="#3DCD58"/>
+          <text x="60" y="17" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="white" letter-spacing="0.5">SCHNEIDER</text>
+          <text x="60" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-weight="600" font-size="9" fill="white" letter-spacing="2">ELECTRIC</text>
+        </svg>
+      </div>
+      <span class="brand-name-tag">Elétrica & Automação</span>
+    </div>
+    <!-- Portobello -->
+    <div class="brand-card" style="--brand-color:#2B2B2B" onclick="showToast('🔍 Filtrando produtos Portobello...')">
+      <div class="brand-logo-svg">
+        <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="40" rx="4" fill="#2B2B2B"/>
+          <text x="60" y="19" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="13" fill="#C8A96E" letter-spacing="3">PORTOBELLO</text>
+          <line x1="20" y1="23" x2="100" y2="23" stroke="#C8A96E" stroke-width="0.5" opacity="0.6"/>
+          <text x="60" y="33" text-anchor="middle" font-family="Arial,sans-serif" font-weight="400" font-size="8" fill="#999" letter-spacing="4">PORCELAIN</text>
+        </svg>
+      </div>
+      <span class="brand-name-tag">Pisos & Revestimentos</span>
+    </div>
   </div>
 </div>
 
@@ -2698,7 +2848,18 @@
 </footer>
 
 <!-- WhatsApp Float -->
-<a href="#" class="floating-whatsapp" title="Fale conosco no WhatsApp">📱</a>
+<div class="wpp-wrapper">
+  <div class="wpp-bubble" id="wpp-bubble">
+    <button class="wpp-bubble-close" onclick="document.getElementById('wpp-bubble').classList.remove('show')">✕</button>
+    <div class="wpp-bubble-text">👋 Olá! Precisa de ajuda?<br><strong>Atendimento via WhatsApp</strong> agora!</div>
+    <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20os%20produtos%20da%20ConstroBR." class="wpp-bubble-btn" target="_blank" rel="noopener">💬 Iniciar conversa →</a>
+  </div>
+  <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20os%20produtos%20da%20ConstroBR." class="floating-whatsapp" title="Fale conosco no WhatsApp" target="_blank" rel="noopener" onclick="document.getElementById('wpp-bubble').classList.remove('show')">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="30" height="30" fill="white">
+      <path d="M16 0C7.163 0 0 7.163 0 16c0 2.82.736 5.469 2.027 7.77L0 32l8.468-2.001A15.934 15.934 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 01-6.77-1.848l-.486-.289-5.03 1.188 1.213-4.897-.316-.502A13.268 13.268 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.874c-.398-.199-2.355-1.162-2.72-1.295-.365-.133-.63-.199-.896.2-.265.398-1.029 1.295-1.261 1.561-.232.266-.465.299-.863.1-.398-.2-1.681-.619-3.202-1.977-1.183-1.057-1.981-2.362-2.213-2.76-.232-.398-.025-.613.175-.811.179-.179.398-.465.597-.698.199-.232.265-.398.398-.664.133-.265.066-.498-.033-.697-.1-.2-.896-2.16-1.228-2.957-.323-.776-.652-.671-.896-.683l-.763-.013c-.265 0-.696.1-1.061.498-.365.399-1.394 1.362-1.394 3.322s1.427 3.853 1.626 4.119c.199.265 2.808 4.287 6.803 6.014.951.41 1.693.655 2.271.839.954.304 1.822.261 2.508.158.765-.114 2.355-.963 2.688-1.893.332-.93.332-1.727.232-1.893-.1-.166-.365-.266-.763-.465z"/>
+    </svg>
+  </a>
+</div>
 
 <!-- Toast Notification -->
 <div id="cart-toast">✅ Adicionado ao carrinho com sucesso!</div>
@@ -3152,6 +3313,12 @@
       showToast('📦 Exibindo: ' + el.textContent.trim());
     }
   }
+
+  // ===== WHATSAPP BUBBLE =====
+  setTimeout(function() {
+    const bubble = document.getElementById('wpp-bubble');
+    if (bubble) bubble.classList.add('show');
+  }, 4000);
 
   // ===== SCROLL TO TOP =====
   window.addEventListener('scroll', function () {
