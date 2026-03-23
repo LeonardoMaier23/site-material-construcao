@@ -934,14 +934,7 @@
   .tool-desc { font-size: 0.77rem; color: var(--gray); line-height: 1.4; }
 
   /* ===== CALCULATOR MODAL AREA ===== */
-  .calc-area {
-    background: var(--gray-light);
-    border-radius: 12px;
-    padding: 24px;
-    margin-top: 20px;
-    display: none;
-  }
-  .calc-area.active { display: block; }
+  /* (styles moved to animation block at end of CSS) */
   .calc-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1339,6 +1332,136 @@
   /* ===== TABS ANIMATION ===== */
   .tab-content { display: none; }
   .tab-content.active { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+
+  /* ===== WISHLIST ACTIVE STATE ===== */
+  .prod-wish.active { background: var(--red); color: white; border-color: var(--red); }
+
+  /* ===== CALC AREA ANIMATION ===== */
+  .calc-area {
+    overflow: hidden;
+    max-height: 0;
+    padding: 0 24px;
+    margin-top: 20px;
+    background: var(--gray-light);
+    border-radius: 12px;
+    transition: max-height 0.4s ease, padding 0.35s ease;
+    display: block !important;
+  }
+  .calc-area.active { max-height: 700px; padding: 24px; }
+
+  /* ===== TOAST NOTIFICATION ===== */
+  #cart-toast {
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    background: var(--green);
+    color: white;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+  }
+  #cart-toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ===== SCROLL TO TOP ===== */
+  #scroll-top {
+    position: fixed;
+    bottom: 90px;
+    left: 24px;
+    background: var(--dark);
+    color: var(--sand-light);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s, transform 0.25s, background 0.2s;
+    pointer-events: none;
+  }
+  #scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  #scroll-top:hover { background: var(--orange); }
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media (max-width: 1100px) {
+    .product-grid { grid-template-columns: repeat(4, 1fr); }
+    .tab-content.active { grid-template-columns: repeat(4, 1fr); }
+    .cat-grid { grid-template-columns: repeat(4, 1fr); }
+    .brands-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-side { flex-direction: row; }
+    .hero-main { min-height: 300px; }
+    .hero-title { font-size: 2.8rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-grid { grid-template-columns: 1fr 1fr; }
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+    .promo-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .header-main {
+      display: flex;
+      flex-wrap: wrap;
+      height: auto;
+      padding: 12px 16px;
+      gap: 10px;
+    }
+    .logo { flex-shrink: 0; }
+    .search-bar { order: 3; width: 100%; flex-basis: 100%; }
+    .search-bar select { display: none; }
+    .header-actions { margin-left: auto; }
+    .hbtn .label { display: none; }
+    nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .nav-inner { width: max-content; min-width: 100%; padding: 0 12px; }
+    .nav-item { padding: 0 12px; font-size: 0.8rem; }
+    .trust-inner { grid-template-columns: 1fr 1fr; }
+    .hero { padding: 12px 16px; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-content { padding: 24px 20px; }
+    .hero-stats { gap: 14px; flex-wrap: wrap; }
+    .hero-side { display: none; }
+    .product-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .tab-content.active { grid-template-columns: repeat(2, 1fr) !important; }
+    .calc-row { grid-template-columns: 1fr !important; }
+    .calc-result { flex-direction: column; gap: 12px; }
+    .promo-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .brands-grid { grid-template-columns: repeat(4, 1fr); }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .product-tabs { overflow-x: auto; flex-wrap: nowrap; }
+    .ptab { white-space: nowrap; }
+    .announce-bar .sep { display: none; }
+    .announce-bar { gap: 10px; font-size: 0.78rem; }
+    .nl-form { flex-direction: column; }
+    .main-section { padding: 20px 16px; }
+    .categories-section { padding: 20px 16px; }
+  }
+  @media (max-width: 480px) {
+    .cat-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .cat-card { padding: 10px 6px; }
+    .cat-card .cat-count { display: none; }
+    .trust-inner { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .brands-grid { grid-template-columns: repeat(3, 1fr); }
+    .hero-title { font-size: 1.9rem; }
+    .hero-badge { font-size: 0.72rem; }
+    .sec-title { font-size: 1.5rem; }
+  }
 </style>
 </head>
 <body>
@@ -1591,7 +1714,7 @@
           <span class="prod-badge badge-off">-35%</span>
           <span class="prod-badge badge-pix">PIX</span>
         </div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🧱</div>
         <div class="prod-body">
           <div class="prod-brand">Votorantim</div>
@@ -1612,7 +1735,7 @@
           <span class="prod-badge badge-off">-28%</span>
           <span class="prod-badge badge-hot">HOT</span>
         </div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🔧</div>
         <div class="prod-body">
           <div class="prod-brand">Bosch</div>
@@ -1632,7 +1755,7 @@
         <div class="prod-badges">
           <span class="prod-badge badge-new">NOVO</span>
         </div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🚿</div>
         <div class="prod-body">
           <div class="prod-brand">Tigre</div>
@@ -1652,7 +1775,7 @@
         <div class="prod-badges">
           <span class="prod-badge badge-off">-42%</span>
         </div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🎨</div>
         <div class="prod-body">
           <div class="prod-brand">Suvinil</div>
@@ -1673,7 +1796,7 @@
           <span class="prod-badge badge-off">-20%</span>
           <span class="prod-badge badge-hot">ATACADO</span>
         </div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">⚡</div>
         <div class="prod-body">
           <div class="prod-brand">Schneider</div>
@@ -1845,7 +1968,7 @@
     <div class="tab-content active" id="tab0">
       <div class="prod-card">
         <div class="prod-badges"><span class="prod-badge badge-hot">FAVORITO</span></div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🧰</div>
         <div class="prod-body">
           <div class="prod-brand">DeWalt</div>
@@ -1861,7 +1984,7 @@
       </div>
       <div class="prod-card">
         <div class="prod-badges"><span class="prod-badge badge-off">-15%</span></div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🪟</div>
         <div class="prod-body">
           <div class="prod-brand">Portobello</div>
@@ -1878,7 +2001,7 @@
       </div>
       <div class="prod-card">
         <div class="prod-badges"><span class="prod-badge badge-new">NOVO</span></div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">💡</div>
         <div class="prod-body">
           <div class="prod-brand">Intelbras</div>
@@ -1894,7 +2017,7 @@
       </div>
       <div class="prod-card">
         <div class="prod-badges"><span class="prod-badge badge-off">-25%</span></div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🚿</div>
         <div class="prod-body">
           <div class="prod-brand">Deca</div>
@@ -1911,7 +2034,7 @@
       </div>
       <div class="prod-card">
         <div class="prod-badges"><span class="prod-badge badge-hot">ATACADO</span></div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🔌</div>
         <div class="prod-body">
           <div class="prod-brand">Pial Legrand</div>
@@ -1929,7 +2052,7 @@
     <div class="tab-content" id="tab1">
       <div class="prod-card">
         <div class="prod-badges"><span class="prod-badge badge-hot">⭐ TOP</span></div>
-        <div class="prod-wish">♡</div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
         <div class="prod-img">🔨</div>
         <div class="prod-body">
           <div class="prod-brand">Stanley</div>
@@ -1943,9 +2066,262 @@
         </div>
       </div>
     </div>
-    <div class="tab-content" id="tab2"></div>
-    <div class="tab-content" id="tab3"></div>
-    <div class="tab-content" id="tab4"></div>
+    <div class="tab-content" id="tab2">
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-new">NOVO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🤖</div>
+        <div class="prod-body">
+          <div class="prod-brand">Intelbras</div>
+          <div class="prod-name">Central de Alarme AMT 8000 Smart Wi-Fi 64 Zonas</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(312)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 689,90</div>
+            <div class="prod-price-pix">🔵 R$ 634,71 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 68,99 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-new">NOVO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">💡</div>
+        <div class="prod-body">
+          <div class="prod-brand">Philips</div>
+          <div class="prod-name">Fita LED Smart 5m RGB+W Wi-Fi Alexa Google</div>
+          <div class="prod-stars"><span class="stars">★★★★☆</span><span class="reviews">(198)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 219,90</div>
+            <div class="prod-price-pix">🔵 R$ 202,31 no PIX</div>
+            <div class="prod-price-parcel">ou 6x de R$ 36,65 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-new">NOVO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🚿</div>
+        <div class="prod-body">
+          <div class="prod-brand">Lorenzetti</div>
+          <div class="prod-name">Ducha Advanced Turbo 7500W Eletrônica 220V</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(541)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 349,90</div>
+            <div class="prod-price-pix">🔵 R$ 321,91 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 34,99 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-new">NOVO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🔌</div>
+        <div class="prod-body">
+          <div class="prod-brand">WEG</div>
+          <div class="prod-name">Inversor de Frequência CFW300 1CV Monofásico</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(87)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 892,00</div>
+            <div class="prod-price-pix">🔵 R$ 820,64 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 89,20 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-new">NOVO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🪜</div>
+        <div class="prod-body">
+          <div class="prod-brand">Mor</div>
+          <div class="prod-name">Escada Telescópica Alumínio 7 Degraus 150kg</div>
+          <div class="prod-stars"><span class="stars">★★★★☆</span><span class="reviews">(423)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price"><span class="cur">R$</span> 459,00</div>
+            <div class="prod-price-pix">🔵 R$ 422,28 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 45,90 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab3">
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-off">-45%</span><span class="prod-badge badge-hot">HOT</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🔨</div>
+        <div class="prod-body">
+          <div class="prod-brand">Makita</div>
+          <div class="prod-name">Parafusadeira/Furadeira a Bateria 18V DF474D</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(3.210)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 749,00</div>
+            <div class="prod-price"><span class="cur">R$</span> 411,95</div>
+            <div class="prod-price-pix">🔵 R$ 378,99 no PIX</div>
+            <div class="prod-price-parcel">ou 10x de R$ 41,19 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-off">-38%</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🎨</div>
+        <div class="prod-body">
+          <div class="prod-brand">Coral</div>
+          <div class="prod-name">Tinta Texturizada Quartzolit 25kg Areia Fina</div>
+          <div class="prod-stars"><span class="stars">★★★★☆</span><span class="reviews">(1.540)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 189,90</div>
+            <div class="prod-price"><span class="cur">R$</span> 117,74</div>
+            <div class="prod-price-pix">🔵 R$ 108,32 no PIX</div>
+            <div class="prod-price-parcel">ou 6x de R$ 19,62 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-off">-30%</span><span class="prod-badge badge-pix">PIX</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🚿</div>
+        <div class="prod-body">
+          <div class="prod-brand">Hydra</div>
+          <div class="prod-name">Válvula de Descarga Hydra Max 1.1/2" Cromada</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(2.876)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 124,90</div>
+            <div class="prod-price"><span class="cur">R$</span> 87,43</div>
+            <div class="prod-price-pix">🔵 R$ 80,44 no PIX</div>
+            <div class="prod-price-parcel">ou 5x de R$ 17,49 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-off">-22%</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🪟</div>
+        <div class="prod-body">
+          <div class="prod-brand">Cecrisa</div>
+          <div class="prod-name">Porcelanato Retificado Cimento Queimado 60x60cm</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(988)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 79,90/m²</div>
+            <div class="prod-price"><span class="cur">R$</span> 62,32<span style="font-size:0.8rem">/m²</span></div>
+            <div class="prod-price-pix">🔵 R$ 57,34 no PIX</div>
+            <div class="prod-price-parcel">ou 4x de R$ 15,58 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-off">-18%</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">⚡</div>
+        <div class="prod-body">
+          <div class="prod-brand">Pial Legrand</div>
+          <div class="prod-name">Disjuntor Bipolar 40A DIN Curva C</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(4.320)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 42,50</div>
+            <div class="prod-price"><span class="cur">R$</span> 34,85</div>
+            <div class="prod-price-pix">🔵 R$ 32,06 no PIX</div>
+            <div class="prod-price-parcel">ou 2x de R$ 17,42 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab4">
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-hot">ATACADO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🧱</div>
+        <div class="prod-body">
+          <div class="prod-brand">Votorantim</div>
+          <div class="prod-name">Cimento Portland CP-V ARI 50kg — Pallet 36 sacos</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(1.230)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 31,90/saco</div>
+            <div class="prod-price"><span class="cur">R$</span> 26,50<span style="font-size:0.8rem">/saco</span></div>
+            <div class="prod-price-pix">🔵 R$ 24,38 no PIX · pallet completo</div>
+            <div class="prod-price-parcel">ou 10x de R$ 95,40 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-hot">ATACADO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🪵</div>
+        <div class="prod-body">
+          <div class="prod-brand">Eucatex</div>
+          <div class="prod-name">Drywall ST 12,5mm 1,20x2,40m — Kit 50 chapas</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(765)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 49,90/chapa</div>
+            <div class="prod-price"><span class="cur">R$</span> 38,90<span style="font-size:0.8rem">/chapa</span></div>
+            <div class="prod-price-pix">🔵 R$ 35,79 no PIX · kit 50un</div>
+            <div class="prod-price-parcel">ou 10x de R$ 194,50 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-hot">ATACADO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🔧</div>
+        <div class="prod-body">
+          <div class="prod-brand">Tigre</div>
+          <div class="prod-name">Tubo PVC Soldável 100mm 6m — Caixa 20 unidades</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(2.110)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 89,90/unid</div>
+            <div class="prod-price"><span class="cur">R$</span> 72,90<span style="font-size:0.8rem">/unid</span></div>
+            <div class="prod-price-pix">🔵 R$ 67,07 no PIX · cx 20un</div>
+            <div class="prod-price-parcel">ou 10x de R$ 145,80 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-hot">ATACADO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🦺</div>
+        <div class="prod-body">
+          <div class="prod-brand">3M</div>
+          <div class="prod-name">Kit EPI Obra Completo — Capacete + Luva + Óculos × 10 kits</div>
+          <div class="prod-stars"><span class="stars">★★★★☆</span><span class="reviews">(430)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 189,00/kit</div>
+            <div class="prod-price"><span class="cur">R$</span> 149,90<span style="font-size:0.8rem">/kit</span></div>
+            <div class="prod-price-pix">🔵 R$ 137,91 no PIX · cx 10 kits</div>
+            <div class="prod-price-parcel">ou 10x de R$ 149,90 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-badges"><span class="prod-badge badge-hot">ATACADO</span></div>
+        <div class="prod-wish" onclick="toggleWish(this)" title="Favoritar">♡</div>
+        <div class="prod-img">🎨</div>
+        <div class="prod-body">
+          <div class="prod-brand">Suvinil</div>
+          <div class="prod-name">Tinta Acrílica Semibrilho 18L — Combo 4 latas</div>
+          <div class="prod-stars"><span class="stars">★★★★★</span><span class="reviews">(892)</span></div>
+          <div class="prod-price-area">
+            <div class="prod-price-old">R$ 199,90/lata</div>
+            <div class="prod-price"><span class="cur">R$</span> 159,90<span style="font-size:0.8rem">/lata</span></div>
+            <div class="prod-price-pix">🔵 R$ 147,11 no PIX · combo 4un</div>
+            <div class="prod-price-parcel">ou 10x de R$ 63,96 sem juros</div>
+          </div>
+          <button class="btn-cart" onclick="addCart(this)">🛒 Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2064,10 +2440,11 @@
   <div class="newsletter-inner">
     <div class="nl-title">💡 Fique por Dentro das Melhores Ofertas</div>
     <div class="nl-sub">Receba cupons exclusivos, promoções e dicas de obra diretamente no seu e-mail</div>
-    <div class="nl-form">
-      <input class="nl-input" type="email" placeholder="Seu melhor e-mail...">
-      <button class="nl-btn">Quero Receber! →</button>
+    <div class="nl-form" id="nl-form-wrap">
+      <input class="nl-input" id="nl-email" type="email" placeholder="Seu melhor e-mail...">
+      <button class="nl-btn" onclick="submitNewsletter()">Quero Receber! →</button>
     </div>
+    <div id="nl-success" style="display:none;color:white;font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:12px">✅ Ótimo! Você está na lista. Verifique seu e-mail.</div>
     <div class="nl-note">🔒 Sem spam. Cancele quando quiser. LGPD compliant.</div>
   </div>
 </div>
@@ -2143,7 +2520,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 ConstroBR Materiais de Construção LTDA · CNPJ 12.345.678/0001-90 · Todos os direitos reservados</div>
+    <div class="footer-copy">© 2026 ConstroBR Materiais de Construção LTDA · CNPJ 12.345.678/0001-90 · Todos os direitos reservados</div>
     <div class="footer-pay">
       <span style="font-size:0.72rem;color:rgba(255,255,255,0.3)">Pagamentos:</span>
       <div class="pay-icon">VISA</div>
@@ -2163,6 +2540,12 @@
 
 <!-- WhatsApp Float -->
 <a href="#" class="floating-whatsapp" title="Fale conosco no WhatsApp">📱</a>
+
+<!-- Toast Notification -->
+<div id="cart-toast">✅ Adicionado ao carrinho com sucesso!</div>
+
+<!-- Scroll to Top -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">▲</button>
 
 <script>
   // ===== COUNTDOWN =====
@@ -2189,10 +2572,14 @@
 
   // ===== CALCULADORAS =====
   function showCalc(id) {
+    const target = document.getElementById('calc-' + id);
+    const isOpen = target.classList.contains('active');
     document.querySelectorAll('.calc-area').forEach(c => c.classList.remove('active'));
-    const el = document.getElementById('calc-'+id);
-    if (el) el.classList.add('active');
     document.querySelectorAll('.tool-card').forEach(c => c.style.borderColor = '');
+    if (!isOpen) {
+      target.classList.add('active');
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 
   function calcAlvenaria() {
@@ -2255,18 +2642,47 @@
     const orig = btn.textContent;
     btn.textContent = '✅ Adicionado!';
     btn.style.background = '#2D7D3A';
+    btn.disabled = true;
     setTimeout(() => {
       btn.textContent = orig;
       btn.style.background = '';
+      btn.disabled = false;
     }, 1800);
-    // Update badge
     const badge = document.querySelector('.hbtn-cta .badge');
-    if (badge) badge.textContent = parseInt(badge.textContent||0) + 1;
+    if (badge) badge.textContent = parseInt(badge.textContent || 0) + 1;
+    showToast('✅ Produto adicionado ao carrinho!');
   }
 
   function addToCart() {
-    alert('✅ Materiais adicionados ao carrinho! Confira as melhores ofertas de cimento, areia e tijolo.');
+    showToast('✅ Materiais adicionados ao carrinho!');
   }
+
+  function showToast(msg) {
+    const toast = document.getElementById('cart-toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  function toggleWish(el) {
+    el.classList.toggle('active');
+    el.textContent = el.classList.contains('active') ? '♥' : '♡';
+  }
+
+  function submitNewsletter() {
+    const input = document.getElementById('nl-email');
+    if (!input || !input.value || !input.value.includes('@')) {
+      if (input) { input.style.outline = '2px solid #C0392B'; input.focus(); }
+      return;
+    }
+    document.getElementById('nl-form-wrap').style.display = 'none';
+    document.getElementById('nl-success').style.display = 'block';
+  }
+
+  // ===== SCROLL TO TOP =====
+  window.addEventListener('scroll', function () {
+    document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 400);
+  });
 </script>
 </body>
 </html>
