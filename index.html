@@ -1393,6 +1393,165 @@
   #scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   #scroll-top:hover { background: var(--orange); }
 
+  /* ===== MODAL & PANELS ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    width: 90%;
+    max-width: 440px;
+    position: relative;
+    box-shadow: 0 16px 64px rgba(0,0,0,0.3);
+  }
+  .modal-close {
+    position: absolute;
+    top: 14px; right: 16px;
+    background: none; border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: var(--gray);
+    line-height: 1;
+  }
+  .modal-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--dark);
+  }
+  .modal-field { margin-bottom: 14px; }
+  .modal-field label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--mid);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .modal-field input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--sand-light);
+    border-radius: 8px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    color: var(--dark);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .modal-field input:focus { border-color: var(--orange); }
+  .modal-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.2s;
+  }
+  .modal-btn:hover { background: var(--orange-dark); }
+  .modal-result {
+    margin-top: 16px;
+    padding: 14px;
+    background: var(--cream);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    display: none;
+  }
+  .modal-link {
+    display: block;
+    text-align: center;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--orange);
+    cursor: pointer;
+  }
+  .modal-link:hover { text-decoration: underline; }
+  /* ===== SIDE PANEL ===== */
+  .side-panel {
+    position: fixed;
+    top: 0; right: -440px;
+    width: 420px;
+    max-width: 96vw;
+    height: 100vh;
+    background: white;
+    z-index: 3001;
+    box-shadow: -4px 0 32px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+  }
+  .side-panel.open { right: 0; }
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .panel-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--dark);
+  }
+  .panel-close {
+    background: none; border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: var(--gray);
+    line-height: 1;
+  }
+  .panel-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+  .panel-footer { padding: 16px 24px; border-top: 1px solid var(--gray-light); }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .cart-item-img { font-size: 2rem; }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-name { font-size: 0.82rem; font-weight: 600; color: var(--dark); margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cart-item-price { font-size: 0.9rem; font-weight: 700; color: var(--orange); }
+  .cart-item-qty { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .qty-btn { background: var(--gray-light); border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; }
+  .qty-num { font-size: 0.85rem; font-weight: 600; min-width: 16px; text-align: center; }
+  .cart-item-remove { background: none; border: none; color: var(--gray); font-size: 1rem; cursor: pointer; padding: 4px; flex-shrink: 0; }
+  .cart-item-remove:hover { color: var(--red); }
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding-top: 10px;
+    color: var(--dark);
+  }
+  .cart-total-val { color: var(--orange); font-size: 1.25rem; }
+  .empty-msg { text-align: center; padding: 40px 0; color: var(--gray); font-size: 0.95rem; }
+  .empty-msg .empty-icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+  #panel-overlay { z-index: 2999; }
+
   /* ===== MOBILE RESPONSIVE ===== */
   @media (max-width: 1100px) {
     .product-grid { grid-template-columns: repeat(4, 1fr); }
@@ -1499,28 +1658,28 @@
         <option>Madeira</option>
         <option>Tintas</option>
       </select>
-      <input type="text" placeholder="Busque por produto, marca ou código...">
-      <button class="search-btn">🔍 Buscar</button>
+      <input type="text" id="search-input" placeholder="Busque por produto, marca ou código..." onkeydown="if(event.key==='Enter')doSearch()">
+      <button class="search-btn" onclick="doSearch()">🔍 Buscar</button>
     </div>
 
     <div class="header-actions">
-      <button class="hbtn">
+      <button class="hbtn" onclick="openModal('cep-modal')">
         <span class="icon">📍</span>
         <span class="label">CEP / Loja</span>
       </button>
-      <button class="hbtn">
+      <button class="hbtn" onclick="openModal('conta-modal')">
         <span class="icon">👤</span>
         <span class="label">Minha Conta</span>
       </button>
-      <button class="hbtn">
+      <button class="hbtn" onclick="openPanel('favoritos-panel')">
         <span class="icon">❤️</span>
         <span class="label">Favoritos</span>
-        <span class="badge">3</span>
+        <span class="badge" id="fav-badge">0</span>
       </button>
-      <a href="#" class="hbtn hbtn-cta">
+      <a href="#" class="hbtn hbtn-cta" onclick="openPanel('carrinho-panel');return false;">
         <span class="icon">🛒</span>
-        <span class="label">Carrinho · R$ 487,90</span>
-        <span class="badge">4</span>
+        <span class="label" id="cart-label">Carrinho · R$ 0,00</span>
+        <span class="badge" id="cart-badge">0</span>
       </a>
     </div>
   </div>
@@ -1529,19 +1688,19 @@
 <!-- Navigation -->
 <nav>
   <div class="nav-inner">
-    <a class="nav-item" href="#"><span class="nav-icon">☰</span> <span class="nav-dept">Departamentos</span></a>
-    <a class="nav-item active" href="#">Cimento & Argamassa</a>
-    <a class="nav-item" href="#">Ferramentas</a>
-    <a class="nav-item" href="#">Hidráulica</a>
-    <a class="nav-item" href="#">Elétrica</a>
-    <a class="nav-item" href="#">Acabamentos</a>
-    <a class="nav-item" href="#">Madeiras</a>
-    <a class="nav-item" href="#">Tintas</a>
-    <a class="nav-item" href="#">EPI & Segurança</a>
-    <a class="nav-item" href="#">Jardim & Área Externa</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'cats');return false;"><span class="nav-icon">☰</span> <span class="nav-dept">Departamentos</span></a>
+    <a class="nav-item active" href="#" onclick="navToCategory(this,'prods');return false;">Cimento & Argamassa</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'prods');return false;">Ferramentas</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'prods');return false;">Hidráulica</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'prods');return false;">Elétrica</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'prods');return false;">Acabamentos</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'prods');return false;">Madeiras</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'prods');return false;">Tintas</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'prods');return false;">EPI & Segurança</a>
+    <a class="nav-item" href="#" onclick="navToCategory(this,'prods');return false;">Jardim & Área Externa</a>
     <div class="nav-spacer"></div>
-    <a class="nav-item" href="#">🚛 Entrega Expressa</a>
-    <a class="nav-item nav-promo" href="#">🔥 Ofertas do Dia</a>
+    <a class="nav-item" href="#" onclick="openModal('cep-modal');return false;">🚛 Entrega Expressa</a>
+    <a class="nav-item nav-promo" href="#" onclick="document.querySelector('.offers-section').scrollIntoView({behavior:'smooth'});return false;">🔥 Ofertas do Dia</a>
   </div>
 </nav>
 
@@ -2544,6 +2703,88 @@
 <!-- Toast Notification -->
 <div id="cart-toast">✅ Adicionado ao carrinho com sucesso!</div>
 
+<!-- Panel Overlay -->
+<div id="panel-overlay" class="modal-overlay" onclick="closeAllPanels()"></div>
+
+<!-- Cart Side Panel -->
+<div id="carrinho-panel" class="side-panel">
+  <div class="panel-header">
+    <div class="panel-title">🛒 Meu Carrinho</div>
+    <button class="panel-close" onclick="closePanel('carrinho-panel')">✕</button>
+  </div>
+  <div class="panel-body" id="cart-items-list">
+    <div class="empty-msg"><span class="empty-icon">🛒</span>Seu carrinho está vazio</div>
+  </div>
+  <div class="panel-footer" id="cart-footer" style="display:none">
+    <div class="cart-total"><span>Total</span><span class="cart-total-val" id="cart-total-val">R$ 0,00</span></div>
+    <button class="modal-btn" onclick="closePanel('carrinho-panel');showToast('✅ Redirecionando para o checkout...')">✅ Finalizar Compra</button>
+    <div class="modal-link" style="margin-top:8px;font-size:0.78rem;color:var(--gray);cursor:default">💳 Parcelamento em até 10x sem juros</div>
+  </div>
+</div>
+
+<!-- Favoritos Side Panel -->
+<div id="favoritos-panel" class="side-panel">
+  <div class="panel-header">
+    <div class="panel-title">❤️ Meus Favoritos</div>
+    <button class="panel-close" onclick="closePanel('favoritos-panel')">✕</button>
+  </div>
+  <div class="panel-body" id="favoritos-list">
+    <div class="empty-msg"><span class="empty-icon">♡</span>Nenhum produto favoritado<br>Clique em ♡ nos produtos para salvar</div>
+  </div>
+</div>
+
+<!-- CEP / Loja Modal -->
+<div id="cep-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('cep-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('cep-modal')">✕</button>
+    <div class="modal-title">📍 Consultar Entrega por CEP</div>
+    <div class="modal-field">
+      <label>Seu CEP</label>
+      <input type="text" id="cep-input" placeholder="00000-000" maxlength="9" oninput="maskCEP(this)" onkeydown="if(event.key==='Enter')consultarCEP()">
+    </div>
+    <button class="modal-btn" onclick="consultarCEP()">🔍 Consultar Entrega</button>
+    <div class="modal-result" id="cep-result"></div>
+    <div class="modal-link" onclick="showToast('🏪 Exibindo lojas próximas...');closeModal('cep-modal')">🏪 Ver lojas físicas próximas →</div>
+  </div>
+</div>
+
+<!-- Minha Conta Modal -->
+<div id="conta-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('conta-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('conta-modal')">✕</button>
+    <div id="conta-login-form">
+      <div class="modal-title">👤 Entrar na Minha Conta</div>
+      <div class="modal-field">
+        <label>E-mail</label>
+        <input type="email" id="conta-email" placeholder="seu@email.com">
+      </div>
+      <div class="modal-field">
+        <label>Senha</label>
+        <input type="password" id="conta-senha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
+      </div>
+      <button class="modal-btn" onclick="fazerLogin()">🔓 Entrar</button>
+      <div class="modal-link" onclick="toggleCadastro()">Não tem conta? Cadastre-se grátis →</div>
+    </div>
+    <div id="conta-cadastro-form" style="display:none">
+      <div class="modal-title">🆕 Criar Conta Grátis</div>
+      <div class="modal-field">
+        <label>Nome Completo</label>
+        <input type="text" id="cad-nome" placeholder="Seu nome completo">
+      </div>
+      <div class="modal-field">
+        <label>E-mail</label>
+        <input type="email" id="cad-email" placeholder="seu@email.com">
+      </div>
+      <div class="modal-field">
+        <label>Senha</label>
+        <input type="password" id="cad-senha" placeholder="Mínimo 8 caracteres" onkeydown="if(event.key==='Enter')fazerCadastro()">
+      </div>
+      <button class="modal-btn" onclick="fazerCadastro()">✅ Criar Conta</button>
+      <div class="modal-link" onclick="toggleCadastro()">← Já tenho uma conta</div>
+    </div>
+  </div>
+</div>
+
 <!-- Scroll to Top -->
 <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">▲</button>
 
@@ -2568,6 +2809,9 @@
   function switchTab(idx) {
     document.querySelectorAll('.ptab').forEach((t,i) => t.classList.toggle('active', i===idx));
     document.querySelectorAll('.tab-content').forEach((t,i) => t.classList.toggle('active', i===idx));
+    document.querySelectorAll('.prod-card').forEach(c => c.style.display = '');
+    const inp = document.getElementById('search-input');
+    if (inp) inp.value = '';
   }
 
   // ===== CALCULADORAS =====
@@ -2648,8 +2892,16 @@
       btn.style.background = '';
       btn.disabled = false;
     }, 1800);
-    const badge = document.querySelector('.hbtn-cta .badge');
-    if (badge) badge.textContent = parseInt(badge.textContent || 0) + 1;
+    const card = btn.closest('.prod-card');
+    if (card) {
+      const name = card.querySelector('.prod-name') ? card.querySelector('.prod-name').textContent : 'Produto';
+      const icon = card.querySelector('.prod-img') ? card.querySelector('.prod-img').textContent.trim() : '📦';
+      const priceEl = card.querySelector('.prod-price');
+      const priceText = priceEl ? priceEl.textContent.replace(/[^\d,]/g,'').replace(',','.') : '0';
+      const price = parseFloat(priceText) || 0;
+      cartItems.push({ name, icon, price, qty: 1 });
+      renderCart();
+    }
     showToast('✅ Produto adicionado ao carrinho!');
   }
 
@@ -2666,7 +2918,22 @@
 
   function toggleWish(el) {
     el.classList.toggle('active');
-    el.textContent = el.classList.contains('active') ? '♥' : '♡';
+    const isActive = el.classList.contains('active');
+    el.textContent = isActive ? '♥' : '♡';
+    const card = el.closest('.prod-card');
+    if (card) {
+      const name = card.querySelector('.prod-name') ? card.querySelector('.prod-name').textContent : 'Produto';
+      const icon = card.querySelector('.prod-img') ? card.querySelector('.prod-img').textContent.trim() : '📦';
+      const priceEl = card.querySelector('.prod-price');
+      const price = priceEl ? priceEl.textContent.trim() : '';
+      if (isActive) {
+        wishItems.push({ name, icon, price });
+      } else {
+        const idx = wishItems.findIndex(i => i.name === name);
+        if (idx !== -1) wishItems.splice(idx, 1);
+      }
+      renderFavoritos();
+    }
   }
 
   function submitNewsletter() {
@@ -2677,6 +2944,213 @@
     }
     document.getElementById('nl-form-wrap').style.display = 'none';
     document.getElementById('nl-success').style.display = 'block';
+  }
+
+  // ===== STATE =====
+  const cartItems = [];
+  const wishItems = [];
+
+  // ===== MODAL / PANEL SYSTEM =====
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function openPanel(id) {
+    document.getElementById('panel-overlay').classList.add('open');
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePanel(id) {
+    document.getElementById(id).classList.remove('open');
+    document.getElementById('panel-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeAllPanels() {
+    document.querySelectorAll('.side-panel').forEach(p => p.classList.remove('open'));
+    document.getElementById('panel-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeAllPanels();
+      document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+      document.body.style.overflow = '';
+    }
+  });
+
+  // ===== CEP =====
+  function maskCEP(input) {
+    let v = input.value.replace(/\D/g, '');
+    if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5,8);
+    input.value = v;
+  }
+  function consultarCEP() {
+    const cep = document.getElementById('cep-input').value.replace(/\D/g,'');
+    const result = document.getElementById('cep-result');
+    if (cep.length < 8) {
+      result.innerHTML = '<span style="color:var(--red)">⚠️ Digite um CEP válido com 8 dígitos.</span>';
+      result.style.display = 'block';
+      return;
+    }
+    result.innerHTML = '<span style="color:var(--gray)">⏳ Consultando...</span>';
+    result.style.display = 'block';
+    setTimeout(function() {
+      const dias = Math.floor(Math.random() * 3) + 2;
+      const gratis = Math.random() > 0.4;
+      const freteVal = gratis ? '<span style="color:var(--green);font-weight:700">🎁 GRÁTIS</span>' : 'R$ ' + (Math.random()*25+10).toFixed(2).replace('.',',');
+      result.innerHTML =
+        '<div style="font-weight:700;margin-bottom:10px;color:var(--dark)">Opções de Entrega:</div>' +
+        '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--sand-light)">' +
+          '<span>🚚 Padrão (' + dias + '–' + (dias+2) + ' dias úteis)</span>' + freteVal +
+        '</div>' +
+        '<div style="display:flex;justify-content:space-between;padding:8px 0">' +
+          '<span>⚡ Expressa (1–2 dias úteis)</span><span style="color:var(--orange);font-weight:700">R$ ' + (Math.random()*20+28).toFixed(2).replace('.',',') + '</span>' +
+        '</div>';
+    }, 900);
+  }
+
+  // ===== MINHA CONTA =====
+  function toggleCadastro() {
+    const login = document.getElementById('conta-login-form');
+    const cad = document.getElementById('conta-cadastro-form');
+    const loginHidden = login.style.display === 'none';
+    login.style.display = loginHidden ? '' : 'none';
+    cad.style.display = loginHidden ? 'none' : '';
+  }
+  function fazerLogin() {
+    const email = document.getElementById('conta-email');
+    const senha = document.getElementById('conta-senha');
+    email.style.outline = '';
+    senha.style.outline = '';
+    if (!email.value || !email.value.includes('@')) { email.style.outline = '2px solid var(--red)'; email.focus(); return; }
+    if (!senha.value || senha.value.length < 4) { senha.style.outline = '2px solid var(--red)'; senha.focus(); return; }
+    closeModal('conta-modal');
+    showToast('✅ Bem-vindo(a) de volta!');
+  }
+  function fazerCadastro() {
+    const nome = document.getElementById('cad-nome').value.trim();
+    const email = document.getElementById('cad-email').value.trim();
+    const senha = document.getElementById('cad-senha').value;
+    if (!nome) { document.getElementById('cad-nome').style.outline = '2px solid var(--red)'; return; }
+    if (!email || !email.includes('@')) { document.getElementById('cad-email').style.outline = '2px solid var(--red)'; return; }
+    if (!senha || senha.length < 8) { document.getElementById('cad-senha').style.outline = '2px solid var(--red)'; return; }
+    closeModal('conta-modal');
+    showToast('✅ Conta criada! Bem-vindo(a), ' + nome.split(' ')[0] + '!');
+  }
+
+  // ===== CART PANEL =====
+  function renderCart() {
+    const list = document.getElementById('cart-items-list');
+    const footer = document.getElementById('cart-footer');
+    const badge = document.getElementById('cart-badge');
+    const label = document.getElementById('cart-label');
+    const total = cartItems.reduce(function(s, i) { return s + i.price * (i.qty || 1); }, 0);
+    if (badge) badge.textContent = cartItems.length;
+    if (label) label.textContent = cartItems.length ? 'Carrinho · R$ ' + total.toFixed(2).replace('.', ',') : 'Carrinho · R$ 0,00';
+    if (cartItems.length === 0) {
+      list.innerHTML = '<div class="empty-msg"><span class="empty-icon">🛒</span>Seu carrinho está vazio</div>';
+      footer.style.display = 'none';
+      return;
+    }
+    list.innerHTML = cartItems.map(function(item, i) {
+      return '<div class="cart-item">' +
+        '<div class="cart-item-img">' + item.icon + '</div>' +
+        '<div class="cart-item-info">' +
+          '<div class="cart-item-name" title="' + item.name + '">' + item.name + '</div>' +
+          '<div class="cart-item-price">R$ ' + (item.price * (item.qty||1)).toFixed(2).replace('.', ',') + '</div>' +
+          '<div class="cart-item-qty">' +
+            '<button class="qty-btn" onclick="changeQty(' + i + ',-1)">−</button>' +
+            '<span class="qty-num">' + (item.qty||1) + '</span>' +
+            '<button class="qty-btn" onclick="changeQty(' + i + ',1)">+</button>' +
+          '</div>' +
+        '</div>' +
+        '<button class="cart-item-remove" onclick="removeCartItem(' + i + ')" title="Remover">✕</button>' +
+      '</div>';
+    }).join('');
+    document.getElementById('cart-total-val').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    footer.style.display = 'block';
+  }
+  function changeQty(i, delta) {
+    cartItems[i].qty = Math.max(1, (cartItems[i].qty || 1) + delta);
+    renderCart();
+  }
+  function removeCartItem(i) {
+    cartItems.splice(i, 1);
+    renderCart();
+  }
+
+  // ===== FAVORITOS PANEL =====
+  function renderFavoritos() {
+    const list = document.getElementById('favoritos-list');
+    const badge = document.getElementById('fav-badge');
+    if (badge) badge.textContent = wishItems.length;
+    if (wishItems.length === 0) {
+      list.innerHTML = '<div class="empty-msg"><span class="empty-icon">♡</span>Nenhum produto favoritado<br>Clique em ♡ nos produtos para salvar</div>';
+      return;
+    }
+    list.innerHTML = wishItems.map(function(item, i) {
+      return '<div class="cart-item">' +
+        '<div class="cart-item-img">' + item.icon + '</div>' +
+        '<div class="cart-item-info">' +
+          '<div class="cart-item-name" title="' + item.name + '">' + item.name + '</div>' +
+          '<div class="cart-item-price">' + item.price + '</div>' +
+        '</div>' +
+        '<button class="cart-item-remove" onclick="removeFavItem(' + i + ')" title="Remover">✕</button>' +
+      '</div>';
+    }).join('');
+  }
+  function removeFavItem(i) {
+    wishItems.splice(i, 1);
+    renderFavoritos();
+  }
+
+  // ===== SEARCH =====
+  function doSearch() {
+    const query = (document.getElementById('search-input').value || '').trim().toLowerCase();
+    if (!query) {
+      showToast('⚠️ Digite algo para buscar');
+      return;
+    }
+    const allCards = document.querySelectorAll('.prod-card');
+    let firstTab = null;
+    document.querySelectorAll('.tab-content').forEach(function(tc) { tc.classList.remove('active'); });
+    document.querySelectorAll('.ptab').forEach(function(t) { t.classList.remove('active'); });
+    allCards.forEach(function(card) {
+      const name = card.querySelector('.prod-name') ? card.querySelector('.prod-name').textContent : '';
+      const brand = card.querySelector('.prod-brand') ? card.querySelector('.prod-brand').textContent : '';
+      const match = (name + ' ' + brand).toLowerCase().includes(query);
+      card.style.display = match ? '' : 'none';
+      if (match && !firstTab) firstTab = card.closest('.tab-content');
+    });
+    if (firstTab) {
+      firstTab.classList.add('active');
+      const idx = Array.from(document.querySelectorAll('.tab-content')).indexOf(firstTab);
+      const tabs = document.querySelectorAll('.ptab');
+      if (tabs[idx]) tabs[idx].classList.add('active');
+      document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
+      showToast('🔍 Exibindo resultados para: "' + document.getElementById('search-input').value.trim() + '"');
+    } else {
+      showToast('😕 Nenhum produto encontrado para "' + document.getElementById('search-input').value.trim() + '"');
+      allCards.forEach(function(c) { c.style.display = ''; });
+      document.querySelectorAll('.tab-content')[0].classList.add('active');
+      document.querySelectorAll('.ptab')[0].classList.add('active');
+    }
+  }
+
+  // ===== NAV CATEGORY =====
+  function navToCategory(el, target) {
+    document.querySelectorAll('.nav-item').forEach(function(item) { item.classList.remove('active'); });
+    el.classList.add('active');
+    if (target === 'cats') {
+      document.querySelector('.categories-section').scrollIntoView({ behavior: 'smooth' });
+    } else {
+      document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
+      showToast('📦 Exibindo: ' + el.textContent.trim());
+    }
   }
 
   // ===== SCROLL TO TOP =====
