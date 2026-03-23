@@ -2949,6 +2949,94 @@
 <!-- Scroll to Top -->
 <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">▲</button>
 
+<!-- Toast Notification -->
+<div id="cart-toast">✅ Adicionado ao carrinho com sucesso!</div>
+
+<!-- Panel Overlay -->
+<div id="panel-overlay" class="modal-overlay" onclick="closeAllPanels()"></div>
+
+<!-- Cart Side Panel -->
+<div id="carrinho-panel" class="side-panel">
+  <div class="panel-header">
+    <div class="panel-title">🛒 Meu Carrinho</div>
+    <button class="panel-close" onclick="closePanel('carrinho-panel')">✕</button>
+  </div>
+  <div class="panel-body" id="cart-items-list">
+    <div class="empty-msg"><span class="empty-icon">🛒</span>Seu carrinho está vazio</div>
+  </div>
+  <div class="panel-footer" id="cart-footer" style="display:none">
+    <div class="cart-total"><span>Total</span><span class="cart-total-val" id="cart-total-val">R$ 0,00</span></div>
+    <button class="modal-btn" onclick="closePanel('carrinho-panel');showToast('✅ Redirecionando para o checkout...')">✅ Finalizar Compra</button>
+    <div class="modal-link" style="margin-top:8px;font-size:0.78rem;color:var(--gray);cursor:default">💳 Parcelamento em até 10x sem juros</div>
+  </div>
+</div>
+
+<!-- Favoritos Side Panel -->
+<div id="favoritos-panel" class="side-panel">
+  <div class="panel-header">
+    <div class="panel-title">❤️ Meus Favoritos</div>
+    <button class="panel-close" onclick="closePanel('favoritos-panel')">✕</button>
+  </div>
+  <div class="panel-body" id="favoritos-list">
+    <div class="empty-msg"><span class="empty-icon">♡</span>Nenhum produto favoritado<br>Clique em ♡ nos produtos para salvar</div>
+  </div>
+</div>
+
+<!-- CEP / Loja Modal -->
+<div id="cep-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('cep-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('cep-modal')">✕</button>
+    <div class="modal-title">📍 Consultar Entrega por CEP</div>
+    <div class="modal-field">
+      <label>Seu CEP</label>
+      <input type="text" id="cep-input" placeholder="00000-000" maxlength="9" oninput="maskCEP(this)" onkeydown="if(event.key==='Enter')consultarCEP()">
+    </div>
+    <button class="modal-btn" onclick="consultarCEP()">🔍 Consultar Entrega</button>
+    <div class="modal-result" id="cep-result"></div>
+    <div class="modal-link" onclick="showToast('🏪 Exibindo lojas próximas...');closeModal('cep-modal')">🏪 Ver lojas físicas próximas →</div>
+  </div>
+</div>
+
+<!-- Minha Conta Modal -->
+<div id="conta-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('conta-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('conta-modal')">✕</button>
+    <div id="conta-login-form">
+      <div class="modal-title">👤 Entrar na Minha Conta</div>
+      <div class="modal-field">
+        <label>E-mail</label>
+        <input type="email" id="conta-email" placeholder="seu@email.com">
+      </div>
+      <div class="modal-field">
+        <label>Senha</label>
+        <input type="password" id="conta-senha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
+      </div>
+      <button class="modal-btn" onclick="fazerLogin()">🔓 Entrar</button>
+      <div class="modal-link" onclick="toggleCadastro()">Não tem conta? Cadastre-se grátis →</div>
+    </div>
+    <div id="conta-cadastro-form" style="display:none">
+      <div class="modal-title">🆕 Criar Conta Grátis</div>
+      <div class="modal-field">
+        <label>Nome Completo</label>
+        <input type="text" id="cad-nome" placeholder="Seu nome completo">
+      </div>
+      <div class="modal-field">
+        <label>E-mail</label>
+        <input type="email" id="cad-email" placeholder="seu@email.com">
+      </div>
+      <div class="modal-field">
+        <label>Senha</label>
+        <input type="password" id="cad-senha" placeholder="Mínimo 8 caracteres" onkeydown="if(event.key==='Enter')fazerCadastro()">
+      </div>
+      <button class="modal-btn" onclick="fazerCadastro()">✅ Criar Conta</button>
+      <div class="modal-link" onclick="toggleCadastro()">← Já tenho uma conta</div>
+    </div>
+  </div>
+</div>
+
+<!-- Scroll to Top -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">▲</button>
+
 <script>
   // ===== COUNTDOWN =====
   let targetTime = new Date().getTime() + (4 * 3600 + 37 * 60 + 22) * 1000;
