@@ -24,6 +24,8 @@
     --gray-light: #F0EBE0;
     --green: #2D7D3A;
     --red: #C0392B;
+    --whatsapp: #25D366;
+    --whatsapp-dark: #1ebe5d;
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1367,10 +1369,10 @@
     margin-bottom: 10px;
     padding-right: 16px;
   }
-  .wpp-bubble-text strong { color: #25D366; }
+  .wpp-bubble-text strong { color: var(--whatsapp); }
   .wpp-bubble-btn {
     display: block;
-    background: #25D366;
+    background: var(--whatsapp);
     color: white;
     text-align: center;
     padding: 8px 12px;
@@ -1380,9 +1382,9 @@
     text-decoration: none;
     transition: background 0.2s;
   }
-  .wpp-bubble-btn:hover { background: #1ebe5d; }
+  .wpp-bubble-btn:hover { background: var(--whatsapp-dark); }
   .floating-whatsapp {
-    background: #25D366;
+    background: var(--whatsapp);
     color: white;
     width: 58px;
     height: 58px;
@@ -1793,20 +1795,20 @@
     </div>
 
     <div class="header-actions">
-      <button class="hbtn" onclick="openModal('cep-modal')">
+      <button class="hbtn" onclick="openModal('cep-modal')" aria-label="Consultar entrega por CEP">
         <span class="icon">📍</span>
         <span class="label">CEP / Loja</span>
       </button>
-      <button class="hbtn" onclick="openModal('conta-modal')">
+      <button class="hbtn" onclick="openModal('conta-modal')" aria-label="Acessar minha conta">
         <span class="icon">👤</span>
         <span class="label">Minha Conta</span>
       </button>
-      <button class="hbtn" onclick="openPanel('favoritos-panel')">
+      <button class="hbtn" onclick="openPanel('favoritos-panel')" aria-label="Ver favoritos">
         <span class="icon">❤️</span>
         <span class="label">Favoritos</span>
         <span class="badge" id="fav-badge">0</span>
       </button>
-      <a href="#" class="hbtn hbtn-cta" onclick="openPanel('carrinho-panel');return false;">
+      <a href="#" class="hbtn hbtn-cta" onclick="openPanel('carrinho-panel');return false;" aria-label="Abrir carrinho">
         <span class="icon">🛒</span>
         <span class="label" id="cart-label">Carrinho · R$ 0,00</span>
         <span class="badge" id="cart-badge">0</span>
@@ -3005,94 +3007,6 @@
 <!-- Scroll to Top -->
 <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">▲</button>
 
-<!-- Toast Notification -->
-<div id="cart-toast">✅ Adicionado ao carrinho com sucesso!</div>
-
-<!-- Panel Overlay -->
-<div id="panel-overlay" class="modal-overlay" onclick="closeAllPanels()"></div>
-
-<!-- Cart Side Panel -->
-<div id="carrinho-panel" class="side-panel">
-  <div class="panel-header">
-    <div class="panel-title">🛒 Meu Carrinho</div>
-    <button class="panel-close" onclick="closePanel('carrinho-panel')">✕</button>
-  </div>
-  <div class="panel-body" id="cart-items-list">
-    <div class="empty-msg"><span class="empty-icon">🛒</span>Seu carrinho está vazio</div>
-  </div>
-  <div class="panel-footer" id="cart-footer" style="display:none">
-    <div class="cart-total"><span>Total</span><span class="cart-total-val" id="cart-total-val">R$ 0,00</span></div>
-    <button class="modal-btn" onclick="closePanel('carrinho-panel');showToast('✅ Redirecionando para o checkout...')">✅ Finalizar Compra</button>
-    <div class="modal-link" style="margin-top:8px;font-size:0.78rem;color:var(--gray);cursor:default">💳 Parcelamento em até 10x sem juros</div>
-  </div>
-</div>
-
-<!-- Favoritos Side Panel -->
-<div id="favoritos-panel" class="side-panel">
-  <div class="panel-header">
-    <div class="panel-title">❤️ Meus Favoritos</div>
-    <button class="panel-close" onclick="closePanel('favoritos-panel')">✕</button>
-  </div>
-  <div class="panel-body" id="favoritos-list">
-    <div class="empty-msg"><span class="empty-icon">♡</span>Nenhum produto favoritado<br>Clique em ♡ nos produtos para salvar</div>
-  </div>
-</div>
-
-<!-- CEP / Loja Modal -->
-<div id="cep-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('cep-modal')">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('cep-modal')">✕</button>
-    <div class="modal-title">📍 Consultar Entrega por CEP</div>
-    <div class="modal-field">
-      <label>Seu CEP</label>
-      <input type="text" id="cep-input" placeholder="00000-000" maxlength="9" oninput="maskCEP(this)" onkeydown="if(event.key==='Enter')consultarCEP()">
-    </div>
-    <button class="modal-btn" onclick="consultarCEP()">🔍 Consultar Entrega</button>
-    <div class="modal-result" id="cep-result"></div>
-    <div class="modal-link" onclick="showToast('🏪 Exibindo lojas próximas...');closeModal('cep-modal')">🏪 Ver lojas físicas próximas →</div>
-  </div>
-</div>
-
-<!-- Minha Conta Modal -->
-<div id="conta-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('conta-modal')">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('conta-modal')">✕</button>
-    <div id="conta-login-form">
-      <div class="modal-title">👤 Entrar na Minha Conta</div>
-      <div class="modal-field">
-        <label>E-mail</label>
-        <input type="email" id="conta-email" placeholder="seu@email.com">
-      </div>
-      <div class="modal-field">
-        <label>Senha</label>
-        <input type="password" id="conta-senha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
-      </div>
-      <button class="modal-btn" onclick="fazerLogin()">🔓 Entrar</button>
-      <div class="modal-link" onclick="toggleCadastro()">Não tem conta? Cadastre-se grátis →</div>
-    </div>
-    <div id="conta-cadastro-form" style="display:none">
-      <div class="modal-title">🆕 Criar Conta Grátis</div>
-      <div class="modal-field">
-        <label>Nome Completo</label>
-        <input type="text" id="cad-nome" placeholder="Seu nome completo">
-      </div>
-      <div class="modal-field">
-        <label>E-mail</label>
-        <input type="email" id="cad-email" placeholder="seu@email.com">
-      </div>
-      <div class="modal-field">
-        <label>Senha</label>
-        <input type="password" id="cad-senha" placeholder="Mínimo 8 caracteres" onkeydown="if(event.key==='Enter')fazerCadastro()">
-      </div>
-      <button class="modal-btn" onclick="fazerCadastro()">✅ Criar Conta</button>
-      <div class="modal-link" onclick="toggleCadastro()">← Já tenho uma conta</div>
-    </div>
-  </div>
-</div>
-
-<!-- Scroll to Top -->
-<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">▲</button>
-
 <script>
   // ===== COUNTDOWN =====
   let targetTime = new Date().getTime() + (4 * 3600 + 37 * 60 + 22) * 1000;
@@ -3132,9 +3046,10 @@
   }
 
   function calcAlvenaria() {
-    const w = parseFloat(document.getElementById('aw').value) || 0;
-    const h = parseFloat(document.getElementById('ah').value) || 0;
+    const w = parseFloat(document.getElementById('aw').value);
+    const h = parseFloat(document.getElementById('ah').value);
     const ratio = parseFloat(document.getElementById('at').value);
+    if (!w || !h || w <= 0 || h <= 0) { showToast('⚠️ Informe largura e altura válidas'); return; }
     const area = w * h;
     const tijolos = Math.ceil(area / ratio * 1.1);
     const cimento = Math.ceil(area * 0.8 / 50);
@@ -3147,9 +3062,10 @@
   }
 
   function calcTinta() {
-    const area = parseFloat(document.getElementById('ta').value) || 0;
+    const area = parseFloat(document.getElementById('ta').value);
     const demãos = parseInt(document.getElementById('td').value);
     const rend = parseInt(document.getElementById('tt').value);
+    if (!area || area <= 0) { showToast('⚠️ Informe a área a pintar'); return; }
     const litros = Math.ceil(area * demãos / rend * 1.1);
     const lata18 = Math.floor(litros / 18);
     const resto = litros % 18;
@@ -3161,8 +3077,9 @@
   }
 
   function calcConcreto() {
-    const vol = parseFloat(document.getElementById('cv').value) || 0;
+    const vol = parseFloat(document.getElementById('cv').value);
     const kg = parseInt(document.getElementById('ct').value);
+    if (!vol || vol <= 0) { showToast('⚠️ Informe o volume de concreto'); return; }
     const sacos = Math.ceil(vol * kg / 50 * 1.05);
     const brita = (vol * 0.9).toFixed(2);
     const areia = (vol * 0.8).toFixed(2);
@@ -3173,9 +3090,10 @@
   }
 
   function calcPiso() {
-    const w = parseFloat(document.getElementById('pw').value) || 0;
-    const l = parseFloat(document.getElementById('pl').value) || 0;
+    const w = parseFloat(document.getElementById('pw').value);
+    const l = parseFloat(document.getElementById('pl').value);
     const ps = parseFloat(document.getElementById('ps').value);
+    if (!w || !l || w <= 0 || l <= 0) { showToast('⚠️ Informe largura e comprimento válidos'); return; }
     const area = w * l;
     const pecas = Math.ceil(area / ps * 1.1);
     const caixas = Math.ceil(pecas / Math.round(1/ps));
@@ -3190,7 +3108,7 @@
   function addCart(btn) {
     const orig = btn.textContent;
     btn.textContent = '✅ Adicionado!';
-    btn.style.background = '#2D7D3A';
+    btn.style.background = 'var(--green)';
     btn.disabled = true;
     setTimeout(() => {
       btn.textContent = orig;
@@ -3205,6 +3123,7 @@
       const priceText = priceEl ? priceEl.textContent.replace(/[^\d,]/g,'').replace(',','.') : '0';
       const price = parseFloat(priceText) || 0;
       cartItems.push({ name, icon, price, qty: 1 });
+      saveCart();
       renderCart();
     }
     showToast('✅ Produto adicionado ao carrinho!');
@@ -3237,14 +3156,16 @@
         const idx = wishItems.findIndex(i => i.name === name);
         if (idx !== -1) wishItems.splice(idx, 1);
       }
+      saveWish();
       renderFavoritos();
     }
   }
 
   function submitNewsletter() {
     const input = document.getElementById('nl-email');
-    if (!input || !input.value || !input.value.includes('@')) {
-      if (input) { input.style.outline = '2px solid #C0392B'; input.focus(); }
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!input || !emailRe.test(input.value)) {
+      if (input) { input.style.outline = '2px solid var(--red)'; input.focus(); }
       return;
     }
     document.getElementById('nl-form-wrap').style.display = 'none';
@@ -3252,8 +3173,10 @@
   }
 
   // ===== STATE =====
-  const cartItems = [];
-  const wishItems = [];
+  const cartItems = JSON.parse(localStorage.getItem('constrobr_cart') || '[]');
+  const wishItems = JSON.parse(localStorage.getItem('constrobr_wish') || '[]');
+  function saveCart() { localStorage.setItem('constrobr_cart', JSON.stringify(cartItems)); }
+  function saveWish() { localStorage.setItem('constrobr_wish', JSON.stringify(wishItems)); }
 
   // ===== MODAL / PANEL SYSTEM =====
   function openModal(id) {
@@ -3306,14 +3229,14 @@
     setTimeout(function() {
       const dias = Math.floor(Math.random() * 3) + 2;
       const gratis = Math.random() > 0.4;
-      const freteVal = gratis ? '<span style="color:var(--green);font-weight:700">🎁 GRÁTIS</span>' : 'R$ ' + (Math.random()*25+10).toFixed(2).replace('.',',');
+      const freteVal = gratis ? '<span style="color:var(--green);font-weight:700">🎁 GRÁTIS</span>' : 'R$ ' + (Math.random()*25+10).toFixed(2).replace(/\./g, ',');
       result.innerHTML =
         '<div style="font-weight:700;margin-bottom:10px;color:var(--dark)">Opções de Entrega:</div>' +
         '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--sand-light)">' +
           '<span>🚚 Padrão (' + dias + '–' + (dias+2) + ' dias úteis)</span>' + freteVal +
         '</div>' +
         '<div style="display:flex;justify-content:space-between;padding:8px 0">' +
-          '<span>⚡ Expressa (1–2 dias úteis)</span><span style="color:var(--orange);font-weight:700">R$ ' + (Math.random()*20+28).toFixed(2).replace('.',',') + '</span>' +
+          '<span>⚡ Expressa (1–2 dias úteis)</span><span style="color:var(--orange);font-weight:700">R$ ' + (Math.random()*20+28).toFixed(2).replace(/\./g, ',') + '</span>' +
         '</div>';
     }, 900);
   }
@@ -3331,7 +3254,8 @@
     const senha = document.getElementById('conta-senha');
     email.style.outline = '';
     senha.style.outline = '';
-    if (!email.value || !email.value.includes('@')) { email.style.outline = '2px solid var(--red)'; email.focus(); return; }
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.value || !emailOk.test(email.value)) { email.style.outline = '2px solid var(--red)'; email.focus(); return; }
     if (!senha.value || senha.value.length < 4) { senha.style.outline = '2px solid var(--red)'; senha.focus(); return; }
     closeModal('conta-modal');
     showToast('✅ Bem-vindo(a) de volta!');
@@ -3341,7 +3265,7 @@
     const email = document.getElementById('cad-email').value.trim();
     const senha = document.getElementById('cad-senha').value;
     if (!nome) { document.getElementById('cad-nome').style.outline = '2px solid var(--red)'; return; }
-    if (!email || !email.includes('@')) { document.getElementById('cad-email').style.outline = '2px solid var(--red)'; return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('cad-email').style.outline = '2px solid var(--red)'; return; }
     if (!senha || senha.length < 8) { document.getElementById('cad-senha').style.outline = '2px solid var(--red)'; return; }
     closeModal('conta-modal');
     showToast('✅ Conta criada! Bem-vindo(a), ' + nome.split(' ')[0] + '!');
@@ -3355,7 +3279,7 @@
     const label = document.getElementById('cart-label');
     const total = cartItems.reduce(function(s, i) { return s + i.price * (i.qty || 1); }, 0);
     if (badge) badge.textContent = cartItems.length;
-    if (label) label.textContent = cartItems.length ? 'Carrinho · R$ ' + total.toFixed(2).replace('.', ',') : 'Carrinho · R$ 0,00';
+    if (label) label.textContent = cartItems.length ? 'Carrinho · R$ ' + total.toFixed(2).replace(/\./g, ',') : 'Carrinho · R$ 0,00';
     if (cartItems.length === 0) {
       list.innerHTML = '<div class="empty-msg"><span class="empty-icon">🛒</span>Seu carrinho está vazio</div>';
       footer.style.display = 'none';
@@ -3366,7 +3290,7 @@
         '<div class="cart-item-img">' + item.icon + '</div>' +
         '<div class="cart-item-info">' +
           '<div class="cart-item-name" title="' + item.name + '">' + item.name + '</div>' +
-          '<div class="cart-item-price">R$ ' + (item.price * (item.qty||1)).toFixed(2).replace('.', ',') + '</div>' +
+          '<div class="cart-item-price">R$ ' + (item.price * (item.qty||1)).toFixed(2).replace(/\./g, ',') + '</div>' +
           '<div class="cart-item-qty">' +
             '<button class="qty-btn" onclick="changeQty(' + i + ',-1)">−</button>' +
             '<span class="qty-num">' + (item.qty||1) + '</span>' +
@@ -3376,15 +3300,17 @@
         '<button class="cart-item-remove" onclick="removeCartItem(' + i + ')" title="Remover">✕</button>' +
       '</div>';
     }).join('');
-    document.getElementById('cart-total-val').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    document.getElementById('cart-total-val').textContent = 'R$ ' + total.toFixed(2).replace(/\./g, ',');
     footer.style.display = 'block';
   }
   function changeQty(i, delta) {
     cartItems[i].qty = Math.max(1, (cartItems[i].qty || 1) + delta);
+    saveCart();
     renderCart();
   }
   function removeCartItem(i) {
     cartItems.splice(i, 1);
+    saveCart();
     renderCart();
   }
 
@@ -3410,6 +3336,7 @@
   }
   function removeFavItem(i) {
     wishItems.splice(i, 1);
+    saveWish();
     renderFavoritos();
   }
 
@@ -3457,6 +3384,10 @@
       showToast('📦 Exibindo: ' + el.textContent.trim());
     }
   }
+
+  // ===== INIT STATE FROM LOCALSTORAGE =====
+  if (cartItems.length) renderCart();
+  if (wishItems.length) renderFavoritos();
 
   // ===== WHATSAPP BUBBLE =====
   setTimeout(function() {
