@@ -1683,9 +1683,27 @@
     .nl-form { flex-direction: column; }
     .main-section { padding: 20px 16px; }
     .categories-section { padding: 20px 16px; }
+    /* Offers / flash sale */
+    .offers-section { padding: 24px 0; }
+    .offers-inner { padding: 0 16px; }
+    .offers-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .offers-title { font-size: 1.6rem; }
+    .countdown { flex-wrap: wrap; }
+    /* Section titles */
+    .sec-title { font-size: 1.7rem; }
+    /* Newsletter */
+    .newsletter-section { padding: 32px 0; }
+    .nl-title { font-size: 1.6rem; }
+    .nl-sub { font-size: 0.88rem; }
+    /* Product card adjustments */
+    .prod-price { font-size: 1.25rem; }
+    /* Brands */
+    .brand-card { padding: 14px 8px; }
+    /* Modal */
+    .modal-box { margin: 16px; width: calc(100% - 32px); max-width: none; }
   }
   @media (max-width: 480px) {
-    .cat-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .cat-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
     .cat-card { padding: 10px 6px; }
     .cat-card .cat-count { display: none; }
     .trust-inner { grid-template-columns: 1fr; }
@@ -1693,7 +1711,45 @@
     .brands-grid { grid-template-columns: repeat(3, 1fr); }
     .hero-title { font-size: 1.9rem; }
     .hero-badge { font-size: 0.72rem; }
-    .sec-title { font-size: 1.5rem; }
+    .sec-title { font-size: 1.4rem; }
+    .offers-title { font-size: 1.3rem; }
+    .nl-title { font-size: 1.4rem; }
+    .count-block { width: 34px; height: 34px; }
+    .count-num { font-size: 0.95rem; }
+    .tools-grid { grid-template-columns: 1fr; }
+    .hero-stat .num { font-size: 1.4rem; }
+    .product-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .tab-content.active { grid-template-columns: repeat(2, 1fr) !important; }
+    .brands-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .wpp-wrapper { bottom: 16px; right: 16px; }
+    .floating-whatsapp { width: 50px; height: 50px; }
+  }
+  @media (max-width: 375px) {
+    .cat-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+    .cat-card { padding: 8px 4px; }
+    .cat-card .cat-icon { width: 40px; height: 40px; font-size: 1.3rem; }
+    .cat-card .cat-name { font-size: 0.68rem; }
+    .hero-title { font-size: 1.6rem; }
+    .hero-desc { font-size: 0.88rem; }
+    .hero-stats { gap: 10px; }
+    .hero-stat .num { font-size: 1.2rem; }
+    .hero-stat .txt { font-size: 0.65rem; }
+    .sec-title { font-size: 1.25rem; }
+    .nl-title { font-size: 1.25rem; }
+    .offers-title { font-size: 1.1rem; }
+    .count-block { width: 30px; height: 30px; }
+    .count-num { font-size: 0.85rem; }
+    .product-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .tab-content.active { grid-template-columns: repeat(2, 1fr) !important; }
+    .brands-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .wpp-wrapper { bottom: 12px; right: 12px; }
+    .floating-whatsapp { width: 46px; height: 46px; }
+    .wpp-bubble { max-width: calc(100vw - 80px); }
+    .hbtn { padding: 6px 8px; }
+    .logo-text { font-size: 1.4rem; }
+    .announce-bar { font-size: 0.72rem; padding: 7px 12px; }
+    .btn-primary, .btn-secondary { padding: 12px 18px; font-size: 0.85rem; }
+    .pb-title { font-size: 1.1rem; }
   }
 </style>
 </head>
