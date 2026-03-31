@@ -1423,7 +1423,45 @@
     transition: max-height 0.4s ease, padding 0.35s ease;
     display: block !important;
   }
-  .calc-area.active { max-height: 700px; padding: 24px; }
+  .calc-area.active { max-height: 1100px; padding: 24px; }
+  .calc-note {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 10px;
+    flex-basis: 100%;
+    line-height: 1.5;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 10px;
+  }
+  .calc-vol-helper {
+    background: rgba(232,75,12,0.06);
+    border: 1px dashed var(--sand);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 0.82rem;
+  }
+  .calc-vol-helper summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--orange);
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 0.85rem;
+    user-select: none;
+  }
+  .calc-vol-helper .calc-row { margin-top: 12px; margin-bottom: 4px; }
+  .calc-brand-badge {
+    display: inline-block;
+    background: rgba(232,75,12,0.12);
+    color: var(--orange-dark);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    letter-spacing: 0.04em;
+  }
 
   /* ===== TOAST NOTIFICATION ===== */
   #cart-toast {
@@ -2146,97 +2184,173 @@
       <div class="tool-card" onclick="showCalc('alvenaria')">
         <div class="tool-icon">🧱</div>
         <div class="tool-name">Alvenaria / Tijolos</div>
-        <div class="tool-desc">Calcule tijolos, cimento e areia para paredes</div>
+        <div class="tool-desc">Tijolos, cimento, areia e cal — dados reais por tipo de bloco</div>
       </div>
       <div class="tool-card" onclick="showCalc('concreto')">
         <div class="tool-icon">🏗️</div>
         <div class="tool-name">Concreto & Contrapiso</div>
-        <div class="tool-desc">Traço certo para vigas, lajes e pisos</div>
+        <div class="tool-desc">Sacos, brita e areia com traços corretos (Fck 20/25/30)</div>
       </div>
       <div class="tool-card" onclick="showCalc('tinta')">
         <div class="tool-icon">🎨</div>
         <div class="tool-name">Consumo de Tinta</div>
-        <div class="tool-desc">Latões necessários por ambiente</div>
+        <div class="tool-desc">Suvinil, Coral, NovaCor, Hydronorth — rendimento real por marca</div>
       </div>
       <div class="tool-card" onclick="showCalc('piso')">
         <div class="tool-icon">◻️</div>
         <div class="tool-name">Pisos & Revestimentos</div>
-        <div class="tool-desc">Caixas de cerâmica com sobra de 10%</div>
+        <div class="tool-desc">Peças, argamassa e rejunte com desperdício correto por formato</div>
       </div>
     </div>
+
+    <!-- Calculadora Alvenaria -->
     <div class="calc-area" id="calc-alvenaria">
-      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;color:var(--dark)">🧱 Calculadora de Alvenaria</strong>
+      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1.05rem;color:var(--dark)">🧱 Calculadora de Alvenaria</strong>
       <div class="calc-row" style="margin-top:16px">
-        <div class="calc-field"><label>Comprimento da parede (m)</label><input type="number" id="aw" value="10" placeholder="ex: 10"></div>
-        <div class="calc-field"><label>Altura da parede (m)</label><input type="number" id="ah" value="2.8" placeholder="ex: 2.8"></div>
-        <div class="calc-field"><label>Tipo de Tijolo</label>
+        <div class="calc-field"><label>Comprimento da parede (m)</label><input type="number" id="aw" value="10" min="0.1" step="0.1" placeholder="ex: 10"></div>
+        <div class="calc-field"><label>Altura da parede (m)</label><input type="number" id="ah" value="2.8" min="0.1" step="0.1" placeholder="ex: 2.8"></div>
+        <div class="calc-field"><label>Tipo de Tijolo / Bloco</label>
           <select id="at">
-            <option value="0.025">Tijolo Maciço (25/m²)</option>
-            <option value="0.018" selected>Tijolo 8 Furos (18/m²)</option>
-            <option value="0.009">Bloco de Concreto (9/m²)</option>
+            <option value="39" selected>Tijolo 6 Furos — 39 unid/m²</option>
+            <option value="30">Tijolo 9 Furos — 30 unid/m²</option>
+            <option value="25">Tijolo Maciço — 25 unid/m²</option>
+            <option value="9">Bloco de Concreto — 9 unid/m²</option>
           </select>
         </div>
       </div>
-      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcAlvenaria()">📊 Calcular Agora</button>
+      <div class="calc-row">
+        <div class="calc-field"><label>Descontar aberturas — portas/janelas (m²) <span style="font-weight:400;color:var(--gray)">opcional</span></label><input type="number" id="aab" value="0" min="0" step="0.1" placeholder="ex: 4.2"></div>
+        <div class="calc-field" style="display:flex;align-items:flex-end"><label style="display:none"></label></div>
+        <div class="calc-field" style="display:flex;align-items:flex-end"><label style="display:none"></label></div>
+      </div>
+      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcAlvenaria()">📊 Calcular Materiais</button>
       <div class="calc-result" id="res-alvenaria" style="display:none">
-        <div class="calc-result-item"><div class="num" id="r-tijolos">0</div><div class="lbl">Tijolos</div></div>
-        <div class="calc-result-item"><div class="num" id="r-cimento">0</div><div class="lbl">Sacos de Cimento 50kg</div></div>
-        <div class="calc-result-item"><div class="num" id="r-areia">0</div><div class="lbl">m³ de Areia</div></div>
         <div class="calc-result-item"><div class="num" id="r-area">0</div><div class="lbl">m² de Parede</div></div>
-        <button class="btn-primary" style="font-size:0.82rem;padding:10px 18px" onclick="addToCart()">🛒 Montar Carrinho</button>
+        <div class="calc-result-item"><div class="num" id="r-tijolos">0</div><div class="lbl">Tijolos / Blocos <small style="opacity:.6">(+10%)</small></div></div>
+        <div class="calc-result-item"><div class="num" id="r-cimento">0</div><div class="lbl">Sacos Cimento 50kg</div></div>
+        <div class="calc-result-item"><div class="num" id="r-cal">0</div><div class="lbl">kg de Cal Hidratada</div></div>
+        <div class="calc-result-item"><div class="num" id="r-areia">0</div><div class="lbl">m³ de Areia</div></div>
+        <div class="calc-note" id="r-alv-nota"></div>
       </div>
     </div>
+
+    <!-- Calculadora Tinta -->
     <div class="calc-area" id="calc-tinta">
-      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;color:var(--dark)">🎨 Calculadora de Tinta</strong>
+      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1.05rem;color:var(--dark)">🎨 Calculadora de Tinta</strong>
       <div class="calc-row" style="margin-top:16px">
-        <div class="calc-field"><label>Área total (m²)</label><input type="number" id="ta" value="60" placeholder="ex: 60"></div>
+        <div class="calc-field"><label>Área a pintar (m²)</label><input type="number" id="ta" value="60" min="1" step="1" placeholder="ex: 60"></div>
         <div class="calc-field"><label>Número de demãos</label>
-          <select id="td"><option value="1">1 demão</option><option value="2" selected>2 demãos</option><option value="3">3 demãos</option></select>
+          <select id="td">
+            <option value="1">1 demão</option>
+            <option value="2" selected>2 demãos (recomendado)</option>
+            <option value="3">3 demãos</option>
+          </select>
         </div>
-        <div class="calc-field"><label>Tipo de Tinta</label>
-          <select id="tt"><option value="10">Acrílica (10 m²/L)</option><option value="12" selected>Premium (12 m²/L)</option><option value="8">Látex (8 m²/L)</option></select>
+        <div class="calc-field"><label>Tipo de superfície</label>
+          <select id="tsup">
+            <option value="lisa" selected>Lisa / Massa Corrida</option>
+            <option value="textura">Texturada / Rugosa (+25%)</option>
+            <option value="teto">Teto / Forro (+15%)</option>
+          </select>
         </div>
       </div>
-      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcTinta()">📊 Calcular Agora</button>
+      <div class="calc-row">
+        <div class="calc-field" style="grid-column:1/-1"><label>Marca da Tinta</label>
+          <select id="tt">
+            <option value="suvinil">Suvinil Toque Fosco — 9,4 m²/L por demão</option>
+            <option value="coral">Coral Rende Muito — 9,4 m²/L por demão</option>
+            <option value="coralp">Coral Premium Interior — 7,0 m²/L por demão</option>
+            <option value="novacor">NovaCor Cobre Mais (Sherwin-Williams) — 7,2 m²/L por demão</option>
+            <option value="hydro">Hydronorth Rende+ — 6,1 m²/L por demão</option>
+            <option value="econo">Tinta Econômica / Látex — 6,0 m²/L por demão</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcTinta()">📊 Calcular Tinta</button>
       <div class="calc-result" id="res-tinta" style="display:none">
         <div class="calc-result-item"><div class="num" id="r-litros">0</div><div class="lbl">Litros Necessários</div></div>
         <div class="calc-result-item"><div class="num" id="r-lata18">0</div><div class="lbl">Latas de 18L</div></div>
-        <div class="calc-result-item"><div class="num" id="r-lata3">0</div><div class="lbl">Latas de 3,6L complemento</div></div>
+        <div class="calc-result-item"><div class="num" id="r-lata3">0</div><div class="lbl">Latas de 3,6L</div></div>
+        <div class="calc-note" id="r-tinta-nota"></div>
       </div>
     </div>
+
+    <!-- Calculadora Concreto -->
     <div class="calc-area" id="calc-concreto">
-      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;color:var(--dark)">🏗️ Calculadora de Concreto</strong>
-      <div class="calc-row" style="margin-top:16px">
-        <div class="calc-field"><label>Volume (m³)</label><input type="number" id="cv" value="3" placeholder="ex: 3"></div>
-        <div class="calc-field"><label>Traço</label>
-          <select id="ct"><option value="320">Fck 20 MPa — 320kg/m³</option><option value="380" selected>Fck 25 MPa — 380kg/m³</option><option value="420">Fck 30 MPa — 420kg/m³</option></select>
+      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1.05rem;color:var(--dark)">🏗️ Calculadora de Concreto</strong>
+      <details class="calc-vol-helper" style="margin-top:16px">
+        <summary>📐 Não sabe o volume? Calcule pela dimensão da peça</summary>
+        <div class="calc-row">
+          <div class="calc-field"><label>Comprimento (m)</label><input type="number" id="cl" placeholder="ex: 5" min="0.01" step="0.01"></div>
+          <div class="calc-field"><label>Largura (m)</label><input type="number" id="cw" placeholder="ex: 3" min="0.01" step="0.01"></div>
+          <div class="calc-field"><label>Espessura / Altura (m)</label><input type="number" id="ch" placeholder="ex: 0.10" min="0.01" step="0.01"></div>
+        </div>
+        <button class="btn-secondary" style="font-size:0.8rem;padding:8px 16px;color:var(--dark);border-color:var(--orange)" onclick="calcVolConcreto()">↩ Usar este volume</button>
+      </details>
+      <div class="calc-row" style="margin-top:12px">
+        <div class="calc-field"><label>Volume total (m³)</label><input type="number" id="cv" value="3" min="0.1" step="0.1" placeholder="ex: 3"></div>
+        <div class="calc-field"><label>Resistência — Traço</label>
+          <select id="ct">
+            <option value="320">Fck 20 MPa — contrapiso, calçada</option>
+            <option value="380" selected>Fck 25 MPa — viga, pilar, laje</option>
+            <option value="420">Fck 30 MPa — estrutura exigente</option>
+          </select>
         </div>
         <div class="calc-field"><label>Aplicação</label>
-          <select><option>Contrapiso</option><option selected>Viga/Pilar</option><option>Laje</option></select>
+          <select id="capl">
+            <option value="contrapiso">Contrapiso / Calçada</option>
+            <option value="viga" selected>Viga / Pilar</option>
+            <option value="laje">Laje</option>
+            <option value="sapata">Sapata / Fundação</option>
+          </select>
         </div>
       </div>
-      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcConcreto()">📊 Calcular Agora</button>
+      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcConcreto()">📊 Calcular Concreto</button>
       <div class="calc-result" id="res-concreto" style="display:none">
         <div class="calc-result-item"><div class="num" id="r-sacos">0</div><div class="lbl">Sacos Cimento 50kg</div></div>
         <div class="calc-result-item"><div class="num" id="r-brita">0</div><div class="lbl">m³ de Brita</div></div>
         <div class="calc-result-item"><div class="num" id="r-areia2">0</div><div class="lbl">m³ de Areia</div></div>
+        <div class="calc-note" id="r-conc-nota"></div>
       </div>
     </div>
+
+    <!-- Calculadora Piso -->
     <div class="calc-area" id="calc-piso">
-      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;color:var(--dark)">◻️ Calculadora de Piso</strong>
+      <strong style="font-family:'Barlow Semi Condensed',sans-serif;font-size:1.05rem;color:var(--dark)">◻️ Calculadora de Pisos & Revestimentos</strong>
       <div class="calc-row" style="margin-top:16px">
-        <div class="calc-field"><label>Largura do ambiente (m)</label><input type="number" id="pw" value="5" placeholder="ex: 5"></div>
-        <div class="calc-field"><label>Comprimento do ambiente (m)</label><input type="number" id="pl" value="4" placeholder="ex: 4"></div>
-        <div class="calc-field"><label>Tamanho da peça (cm)</label>
-          <select id="ps"><option value="0.09">30x30 cm</option><option value="0.16" selected>40x40 cm</option><option value="0.25">50x50 cm</option><option value="0.36">60x60 cm</option><option value="0.56">75x75 cm</option></select>
+        <div class="calc-field"><label>Largura do ambiente (m)</label><input type="number" id="pw" value="5" min="0.1" step="0.1" placeholder="ex: 5"></div>
+        <div class="calc-field"><label>Comprimento do ambiente (m)</label><input type="number" id="pl" value="4" min="0.1" step="0.1" placeholder="ex: 4"></div>
+        <div class="calc-field"><label>Formato da peça</label>
+          <select id="ps">
+            <option value="0.09">30×30 cm — banheiro, serviço</option>
+            <option value="0.2025">45×45 cm — ambientes compactos</option>
+            <option value="0.25">50×50 cm</option>
+            <option value="0.36" selected>60×60 cm — mais popular</option>
+            <option value="0.64">80×80 cm — ambientes amplos</option>
+            <option value="0.81">90×90 cm — premium</option>
+            <option value="0.72">120×60 cm — retangular moderno</option>
+            <option value="1.44">120×120 cm — grande formato</option>
+          </select>
         </div>
       </div>
-      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcPiso()">📊 Calcular Agora</button>
+      <div class="calc-row">
+        <div class="calc-field"><label>Tipo de assentamento</label>
+          <select id="pst">
+            <option value="reta" selected>Reto / Alinhado</option>
+            <option value="diagonal">Diagonal (+10% desperdício)</option>
+          </select>
+        </div>
+        <div class="calc-field"><label>Peças por caixa <span style="font-weight:400;color:var(--gray)">(ver embalagem)</span></label><input type="number" id="pcx" value="4" min="1" step="1" placeholder="ex: 4"></div>
+        <div class="calc-field" style="display:flex;align-items:flex-end"></div>
+      </div>
+      <button class="btn-primary" style="font-size:0.85rem;padding:10px 20px" onclick="calcPiso()">📊 Calcular Materiais</button>
       <div class="calc-result" id="res-piso" style="display:none">
         <div class="calc-result-item"><div class="num" id="r-m2">0</div><div class="lbl">m² do Ambiente</div></div>
-        <div class="calc-result-item"><div class="num" id="r-pecas">0</div><div class="lbl">Peças (c/ 10% sobra)</div></div>
-        <div class="calc-result-item"><div class="num" id="r-caixas">0</div><div class="lbl">Caixas (c/ 10% sobra)</div></div>
-        <div class="calc-result-item"><div class="num" id="r-rejunte">0</div><div class="lbl">Kg de Rejunte</div></div>
+        <div class="calc-result-item"><div class="num" id="r-pecas">0</div><div class="lbl">Peças necessárias</div></div>
+        <div class="calc-result-item"><div class="num" id="r-caixas">0</div><div class="lbl">Caixas</div></div>
+        <div class="calc-result-item"><div class="num" id="r-argamassa">0</div><div class="lbl">kg Argamassa AC-II</div></div>
+        <div class="calc-result-item"><div class="num" id="r-rejunte">0</div><div class="lbl">kg de Rejunte</div></div>
+        <div class="calc-note" id="r-piso-nota"></div>
       </div>
     </div>
   </div>
@@ -3045,63 +3159,127 @@
     }
   }
 
+  // ===== DADOS DE REFERÊNCIA =====
+  const TINTAS = {
+    suvinil: { nome: 'Suvinil Toque Fosco',                rend: 9.4, emb36: true,  nota: 'Rendimento real: ~150–170 m² por lata 18L (2 demãos). Diluir 20% em água.' },
+    coral:   { nome: 'Coral Rende Muito',                  rend: 9.4, emb36: true,  nota: 'Rendimento real: ~170 m² por lata 18L (2 demãos). Secagem 4h entre demãos.' },
+    coralp:  { nome: 'Coral Premium Interior',             rend: 7.0, emb36: true,  nota: 'Rendimento real: ~125 m² por lata 18L (2 demãos). Acabamento fosco superior.' },
+    novacor: { nome: 'NovaCor Cobre Mais (Sherwin-Williams)', rend: 7.2, emb36: true, nota: 'Rendimento real: ~130 m² por lata 18L (2 demãos). Alta cobertura em uma demão.' },
+    hydro:   { nome: 'Hydronorth Rende+',                  rend: 6.1, emb36: false, nota: 'Rendimento real: ~110 m² por lata 18L (2–4 demãos). Disponível apenas em 18L.' },
+    econo:   { nome: 'Tinta Econômica / Látex',            rend: 6.0, emb36: true,  nota: 'Rendimento estimado: 5–7 m²/L. Pode exigir 3 demãos para cobertura completa.' },
+  };
+  const CIMENTO_M2 = { '39': 0.08, '30': 0.10, '25': 0.12, '9': 0.06 };
+  const TRACO = {
+    '320': { brita: 0.84, areia: 0.72, desc: 'Traço 1:2.8:3 — indicado para contrapiso e calçadas' },
+    '380': { brita: 0.90, areia: 0.80, desc: 'Traço 1:2:3 — indicado para vigas, pilares e lajes' },
+    '420': { brita: 0.95, areia: 0.85, desc: 'Traço 1:1.5:2.5 — estruturas de alta exigência' },
+  };
+
   function calcAlvenaria() {
-    const w = parseFloat(document.getElementById('aw').value);
-    const h = parseFloat(document.getElementById('ah').value);
-    const ratio = parseFloat(document.getElementById('at').value);
-    if (!w || !h || w <= 0 || h <= 0) { showToast('⚠️ Informe largura e altura válidas'); return; }
-    const area = w * h;
-    const tijolos = Math.ceil(area / ratio * 1.1);
-    const cimento = Math.ceil(area * 0.8 / 50);
-    const areia = (area * 0.04).toFixed(2);
+    const w   = parseFloat(document.getElementById('aw').value);
+    const h   = parseFloat(document.getElementById('ah').value);
+    const qtd = parseInt(document.getElementById('at').value);
+    const aab = parseFloat(document.getElementById('aab').value) || 0;
+    if (!w || !h || w <= 0 || h <= 0) { showToast('⚠️ Informe comprimento e altura válidos'); return; }
+    const areaTotal = w * h;
+    const area = Math.max(0.1, areaTotal - aab);
+    const waste = 1.10;
+    const tijolos  = Math.ceil(area * qtd * waste);
+    const sacosM2  = CIMENTO_M2[String(qtd)] || 0.08;
+    const cimento  = Math.ceil(area * sacosM2 * waste);
+    const cal      = Math.ceil(cimento * 50 * 0.5);  // traço 1:2:8 — cal ≈ 0.5× peso cimento
+    const areia    = (area * 0.04 * waste).toFixed(2);
+    const tijoloNome = document.getElementById('at').options[document.getElementById('at').selectedIndex].text.split('—')[0].trim();
+    document.getElementById('r-area').textContent    = area.toFixed(1);
     document.getElementById('r-tijolos').textContent = tijolos.toLocaleString('pt-BR');
     document.getElementById('r-cimento').textContent = cimento;
-    document.getElementById('r-areia').textContent = areia;
-    document.getElementById('r-area').textContent = area.toFixed(1);
+    document.getElementById('r-cal').textContent     = cal;
+    document.getElementById('r-areia').textContent   = areia;
+    document.getElementById('r-alv-nota').textContent =
+      tijoloNome + ' · ' + qtd + ' unid/m² · Traço 1:2:8 (cimento:cal:areia)' +
+      (aab > 0 ? ' · Descontados ' + aab.toFixed(1) + ' m² de aberturas.' : '');
     document.getElementById('res-alvenaria').style.display = 'flex';
   }
 
   function calcTinta() {
-    const area = parseFloat(document.getElementById('ta').value);
-    const demãos = parseInt(document.getElementById('td').value);
-    const rend = parseInt(document.getElementById('tt').value);
+    const area    = parseFloat(document.getElementById('ta').value);
+    const demaos  = parseInt(document.getElementById('td').value);
+    const marcaKey = document.getElementById('tt').value;
+    const supKey  = document.getElementById('tsup').value;
     if (!area || area <= 0) { showToast('⚠️ Informe a área a pintar'); return; }
-    const litros = Math.ceil(area * demãos / rend * 1.1);
-    const lata18 = Math.floor(litros / 18);
-    const resto = litros % 18;
-    const lata3 = Math.ceil(resto / 3.6);
-    document.getElementById('r-litros').textContent = litros;
-    document.getElementById('r-lata18').textContent = lata18;
-    document.getElementById('r-lata3').textContent = lata3;
+    const marca = TINTAS[marcaKey];
+    const mod   = { lisa: 1.0, textura: 1.25, teto: 1.15 }[supKey] || 1.0;
+    const litrosBrutos = area * demaos / marca.rend * mod;
+    const litros = Math.ceil(litrosBrutos * 1.05); // +5% segurança
+    let lata18 = 0, lata36 = 0;
+    if (marca.emb36) {
+      lata18 = Math.floor(litros / 18);
+      const resto = litros - lata18 * 18;
+      lata36 = resto > 0 ? Math.ceil(resto / 3.6) : 0;
+    } else {
+      lata18 = Math.ceil(litros / 18);
+      lata36 = 0;
+    }
+    const supLabel = { lisa: 'lisa/massa corrida', textura: 'texturada (+25%)', teto: 'teto/forro (+15%)' }[supKey];
+    document.getElementById('r-litros').textContent    = litros;
+    document.getElementById('r-lata18').textContent    = lata18;
+    document.getElementById('r-lata3').textContent     = lata36;
+    document.getElementById('r-tinta-nota').textContent =
+      marca.nome + ' · ' + marca.rend + ' m²/L · Superfície ' + supLabel + ' · ' + marca.nota;
     document.getElementById('res-tinta').style.display = 'flex';
+  }
+
+  function calcVolConcreto() {
+    const l = parseFloat(document.getElementById('cl').value);
+    const w = parseFloat(document.getElementById('cw').value);
+    const h = parseFloat(document.getElementById('ch').value);
+    if (!l || !w || !h || l <= 0 || w <= 0 || h <= 0) { showToast('⚠️ Preencha comprimento, largura e espessura'); return; }
+    const vol = (l * w * h).toFixed(3);
+    document.getElementById('cv').value = vol;
+    document.querySelector('#calc-concreto details').removeAttribute('open');
+    showToast('✅ Volume calculado: ' + vol + ' m³');
   }
 
   function calcConcreto() {
     const vol = parseFloat(document.getElementById('cv').value);
-    const kg = parseInt(document.getElementById('ct').value);
+    const kg  = parseInt(document.getElementById('ct').value);
     if (!vol || vol <= 0) { showToast('⚠️ Informe o volume de concreto'); return; }
+    const traco = TRACO[String(kg)];
     const sacos = Math.ceil(vol * kg / 50 * 1.05);
-    const brita = (vol * 0.9).toFixed(2);
-    const areia = (vol * 0.8).toFixed(2);
-    document.getElementById('r-sacos').textContent = sacos;
-    document.getElementById('r-brita').textContent = brita;
-    document.getElementById('r-areia2').textContent = areia;
+    const brita = (vol * traco.brita).toFixed(2);
+    const areia = (vol * traco.areia).toFixed(2);
+    const aplLabel = document.getElementById('capl').options[document.getElementById('capl').selectedIndex].text;
+    document.getElementById('r-sacos').textContent    = sacos;
+    document.getElementById('r-brita').textContent    = brita;
+    document.getElementById('r-areia2').textContent   = areia;
+    document.getElementById('r-conc-nota').textContent =
+      traco.desc + ' · Aplicação: ' + aplLabel + ' · Inclui 5% de perda.';
     document.getElementById('res-concreto').style.display = 'flex';
   }
 
   function calcPiso() {
-    const w = parseFloat(document.getElementById('pw').value);
-    const l = parseFloat(document.getElementById('pl').value);
-    const ps = parseFloat(document.getElementById('ps').value);
+    const w   = parseFloat(document.getElementById('pw').value);
+    const l   = parseFloat(document.getElementById('pl').value);
+    const ps  = parseFloat(document.getElementById('ps').value);
+    const pst = document.getElementById('pst').value;
+    const pcx = parseInt(document.getElementById('pcx').value) || 1;
     if (!w || !l || w <= 0 || l <= 0) { showToast('⚠️ Informe largura e comprimento válidos'); return; }
-    const area = w * l;
-    const pecas = Math.ceil(area / ps * 1.1);
-    const caixas = Math.ceil(pecas / Math.round(1/ps));
-    const rejunte = Math.ceil(area * 0.25);
-    document.getElementById('r-m2').textContent = area.toFixed(1);
-    document.getElementById('r-pecas').textContent = pecas.toLocaleString('pt-BR');
-    document.getElementById('r-caixas').textContent = caixas;
-    document.getElementById('r-rejunte').textContent = rejunte;
+    const area  = w * l;
+    const baseWaste = ps >= 0.64 ? 0.15 : 0.10;        // formatos grandes → 15%
+    const waste = baseWaste + (pst === 'diagonal' ? 0.10 : 0);
+    const pecas     = Math.ceil(area * (1 + waste) / ps);
+    const caixas    = Math.ceil(pecas / pcx);
+    const argamassa = Math.ceil(area * 5.5);            // AC-II: ~5,5 kg/m²
+    const rejunte   = Math.ceil(area * 0.25);
+    const wasteLabel = (waste * 100).toFixed(0) + '%' + (pst === 'diagonal' ? ' (diagonal)' : '');
+    const formatoLabel = document.getElementById('ps').options[document.getElementById('ps').selectedIndex].text.split('—')[0].trim();
+    document.getElementById('r-m2').textContent        = area.toFixed(1);
+    document.getElementById('r-pecas').textContent     = pecas.toLocaleString('pt-BR');
+    document.getElementById('r-caixas').textContent    = caixas;
+    document.getElementById('r-argamassa').textContent = argamassa;
+    document.getElementById('r-rejunte').textContent   = rejunte;
+    document.getElementById('r-piso-nota').textContent =
+      formatoLabel + ' · Desperdício: ' + wasteLabel + ' · Argamassa AC-II (5,5 kg/m²) · Rejunte (0,25 kg/m²) · ' + pcx + ' peças/caixa.';
     document.getElementById('res-piso').style.display = 'flex';
   }
 
